@@ -3,9 +3,9 @@
     <div
       class="flex h-full items-center border-b border-solid border-brand-gray-1 px-8"
     >
-      <a href="/" class="flex h-full items-center text-xl text-black"
-        >danulqua Careers</a
-      >
+      <a href="/" class="flex h-full items-center text-xl text-black">
+        danulqua Careers
+      </a>
       <nav class="ml-12 h-full">
         <ul class="flex h-full items-center space-x-6">
           <li
@@ -17,13 +17,21 @@
           </li>
         </ul>
       </nav>
+      <div class="ml-auto flex h-full items-center">
+        <ProfileImage v-if="isLoggedIn" />
+        <ActionButton v-else @click="login" />
+      </div>
     </div>
   </header>
 </template>
 
 <script>
+import ActionButton from '@/components/ActionButton.vue';
+import ProfileImage from '@/components/ProfileImage.vue';
+
 export default {
   name: 'MainNav',
+  components: { ActionButton, ProfileImage },
   data() {
     return {
       links: [
@@ -52,7 +60,13 @@ export default {
           to: '#',
         },
       ],
+      isLoggedIn: false,
     };
+  },
+  methods: {
+    login() {
+      this.isLoggedIn = true;
+    },
   },
 };
 </script>
