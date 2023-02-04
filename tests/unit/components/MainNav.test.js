@@ -4,14 +4,22 @@ import userEvent from '@testing-library/user-event';
 import MainNav from '@/components/MainNav.vue';
 
 describe('MainNav', () => {
+  beforeEach(() => {
+    render(MainNav, {
+      global: {
+        stubs: {
+          FaIcon: true,
+        },
+      },
+    });
+  });
+
   it('displays brand name', () => {
-    render(MainNav);
     const company = screen.getByText('danulqua Careers');
     expect(company).toBeInTheDocument();
   });
 
   it('displays menu link items', () => {
-    render(MainNav);
     const navigationLinks = screen.getAllByRole('listitem');
     const navigationTexts = navigationLinks.map((item) => item.textContent);
     expect(navigationTexts).toEqual([
@@ -25,8 +33,6 @@ describe('MainNav', () => {
   });
 
   it('displays user profile image', async () => {
-    render(MainNav);
-
     let profileImage = screen.queryByRole('img', {
       name: /user profile image/i,
     });
