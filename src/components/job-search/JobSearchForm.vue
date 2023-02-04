@@ -3,7 +3,7 @@
     <fa-icon :icon="['fas', 'search']" class="ml-4 mr-3" />
 
     <div class="flex h-full flex-1 flex-nowrap text-base font-light">
-      <div class="relative flex h-full flex-1 items-center pr-3">
+      <div class="relative flex h-full flex-1 items-center px-3">
         <label class="absolute left-0 -top-10">Role</label>
         <input
           v-model="role"
