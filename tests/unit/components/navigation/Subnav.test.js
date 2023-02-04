@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/vue';
 
-import Subnav from '@/components/Subnav.vue';
+import Subnav from '@/components/navigation/Subnav.vue';
 
 describe('Subnav', () => {
   describe('when user is on the jobs page', () => {
@@ -26,6 +26,11 @@ describe('Subnav', () => {
   describe('when user is NOT on the jobs page', () => {
     it('does not render the job search results', () => {
       render(Subnav, {
+        global: {
+          stubs: {
+            FaIcon: true,
+          },
+        },
         data() {
           return {
             onJobsPage: false,
