@@ -1,11 +1,12 @@
 <template>
   <main>
-    <section class="flex h-screen flex-col bg-red-500 pt-10 pb-20">
+    <section class="flex h-screen flex-col pt-10 pb-20">
       <div class="grid grid-cols-12">
-        <div class="col-span-5 col-start-2 border border-black">
+        <div class="col-span-5 col-start-2">
           <Headline />
+          <JobSearchForm />
         </div>
-        <div class="col-span-5 col-start-7 border border-black">Column 2</div>
+        <div class="col-span-5 col-start-7"></div>
       </div>
     </section>
   </main>
@@ -13,9 +14,10 @@
 
 <script>
 import Headline from '@/components/Headline.vue';
+import JobSearchForm from '@/components/JobSearchForm.vue';
 
 export default {
   name: 'Hero',
-  components: { Headline },
+  components: { Headline, JobSearchForm },
 };
 </script>
