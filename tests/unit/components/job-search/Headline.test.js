@@ -1,5 +1,5 @@
 import { nextTick } from 'vue';
-import { render, screen } from '@testing-library/vue';
+import { render, screen, fireEvent } from '@testing-library/vue';
 
 import Headline from '@/components/job-search/Headline.vue';
 
@@ -14,10 +14,8 @@ describe('Headline', () => {
 
   it('displays first action verb', () => {
     render(Headline);
-    const actionPhrase = screen.getByRole('heading', {
-      name: /build for everyone/i,
-    });
-    expect(actionPhrase).toBeInTheDocument();
+    const actions = screen.getAllByRole('Action');
+    expect(actions[0].textContent).toBe('Build');
   });
 
   it('changes action verb at a consistent interval', () => {
@@ -32,13 +30,12 @@ describe('Headline', () => {
   it('swaps action verb after interval', async () => {
     render(Headline);
     vi.advanceTimersToNextTimer();
+
+    fireEvent.transitionEnd(screen.getByTestId('scrollableActions'));
     await nextTick();
 
-    const actionPhrase = screen.getByRole('heading', {
-      name: /create for everyone/i,
-    });
-
-    expect(actionPhrase).toBeInTheDocument();
+    const actions = screen.getAllByRole('Action');
+    expect(actions[0].textContent).toBe('Create');
   });
 
   it('removes interval when components disappears', () => {
