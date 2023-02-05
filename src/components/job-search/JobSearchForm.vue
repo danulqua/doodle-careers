@@ -5,12 +5,6 @@
     <div class="flex h-full flex-1 flex-nowrap text-base font-light">
       <div class="border-bottom relative flex h-full flex-1 items-center">
         <label class="absolute left-0 -top-8">Role</label>
-        <!-- <input
-          v-model="role"
-          type="text"
-          placeholder="Software engineer"
-          class="h-full w-full pr-3 text-lg font-normal focus:outline-none"
-        /> -->
         <TextInput
           v-model="role"
           placeholder="Software engineer"
@@ -26,12 +20,6 @@
 
       <div class="border-bottom relative flex h-full flex-1 items-center">
         <label class="absolute left-3 -top-8">Where?</label>
-        <!-- <input
-          v-model="location"
-          type="text"
-          placeholder="Los Angeles"
-          class="h-full w-full pl-3 text-lg font-normal content-none after:absolute after:bottom-0 after:h-[2px] after:w-full after:bg-brand-blue-2 focus:outline-none"
-        /> -->
         <TextInput
           v-model="location"
           placeholder="Software engineer"
