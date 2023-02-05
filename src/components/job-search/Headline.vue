@@ -39,6 +39,7 @@ export default {
   data() {
     return {
       actions: ['Build', 'Create', 'Design', 'Code'],
+      activeIdx: 0,
       interval: null,
       scroll: false,
     };
@@ -53,11 +54,13 @@ export default {
     startChangingActions() {
       this.interval = setInterval(() => {
         this.scroll = true;
-      }, 5000);
+      }, 4000);
     },
     rearrangeItems() {
       this.actions = rearrangeListItems(this.actions);
+      this.activeIdx = (this.activeIdx + 1) % this.actions.length;
       this.scroll = false;
+      this.$emit('change', this.activeIdx);
     },
   },
 };

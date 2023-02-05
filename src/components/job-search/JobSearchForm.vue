@@ -1,15 +1,15 @@
 <template>
   <form class="flex h-12 items-center rounded-3xl border border-brand-gray-3">
-    <fa-icon :icon="['fas', 'search']" class="ml-4 mr-3" />
+    <fa-icon :icon="['fas', 'search']" class="mx-4" />
 
     <div class="flex h-full flex-1 flex-nowrap text-base font-light">
-      <div class="relative flex h-full flex-1 items-center px-3">
-        <label class="absolute left-0 -top-10">Role</label>
+      <div class="border-bottom relative flex h-full flex-1 items-center">
+        <label class="absolute left-0 -top-8">Role</label>
         <input
           v-model="role"
           type="text"
           placeholder="Software engineer"
-          class="w-full text-lg font-normal focus:outline-none"
+          class="bef h-full w-full pr-3 text-lg font-normal focus:outline-none"
         />
       </div>
 
@@ -19,18 +19,22 @@
         in
       </span>
 
-      <div class="relative flex h-full flex-1 items-center px-3">
-        <label class="absolute left-0 -top-10">Where?</label>
+      <div class="border-bottom relative flex h-full flex-1 items-center">
+        <label class="absolute left-3 -top-8">Where?</label>
         <input
           v-model="location"
           type="text"
           placeholder="Los Angeles"
-          class="w-full text-lg font-normal focus:outline-none"
+          class="bef h-full w-full pl-3 text-lg font-normal content-none after:absolute after:bottom-0 after:h-[2px] after:w-full after:bg-brand-blue-2 focus:outline-none"
         />
       </div>
     </div>
 
-    <ActionButton text="Search" type="secondary" class="h-full rounded-r-3xl" />
+    <ActionButton
+      text="Search"
+      type="secondary"
+      class="relative z-10 h-full rounded-r-3xl transition-colors hover:shadow-blue"
+    />
   </form>
 </template>
 
@@ -51,3 +55,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.border-bottom {
+  @apply after:absolute after:bottom-0 after:hidden after:h-[2px] after:w-full after:bg-brand-blue-2 focus-within:after:block hover:after:block;
+}
+</style>
