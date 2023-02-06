@@ -6,10 +6,12 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 library.add(faSearch);
 
 import '@/index.css';
+import router from '@/router';
 import App from '@/App.vue';
 
 const app = createApp(App);
 
+app.use(router);
 app.component('fa-icon', FontAwesomeIcon);
 
 app.mount('#app');
