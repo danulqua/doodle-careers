@@ -11,9 +11,7 @@ describe('Subnav', () => {
 
       render(Subnav, {
         global: {
-          mocks: {
-            $route,
-          },
+          mocks: { $route },
           stubs: {
             FaIcon: true,
           },
@@ -33,9 +31,7 @@ describe('Subnav', () => {
 
       render(Subnav, {
         global: {
-          mocks: {
-            $route,
-          },
+          mocks: { $route },
           stubs: {
             FaIcon: true,
           },
