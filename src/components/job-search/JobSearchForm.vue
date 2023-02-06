@@ -7,8 +7,9 @@
 
     <div class="flex h-full flex-1 flex-nowrap text-base font-light">
       <div class="border-bottom relative flex h-full flex-1 items-center">
-        <label class="absolute left-0 -top-8">Role</label>
+        <label for="role" class="absolute left-0 -top-8">Role</label>
         <TextInput
+          id="role"
           v-model="role"
           placeholder="Software engineer"
           class="pr-3"
@@ -22,8 +23,13 @@
       </span>
 
       <div class="border-bottom relative flex h-full flex-1 items-center">
-        <label class="absolute left-3 -top-8">Where?</label>
-        <TextInput v-model="location" placeholder="Los Angeles" class="pl-3" />
+        <label for="location" class="absolute left-3 -top-8">Where?</label>
+        <TextInput
+          id="location"
+          v-model="location"
+          placeholder="Los Angeles"
+          class="pl-3"
+        />
       </div>
     </div>
 
