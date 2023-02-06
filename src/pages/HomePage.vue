@@ -1,9 +1,12 @@
 <template>
-  <div class="text-6xl font-bold">Home page</div>
+  <Hero />
 </template>
 
 <script>
+import Hero from '@/components/job-search/Hero.vue';
+
 export default {
   name: 'HomePage',
+  components: { Hero },
 };
 </script>

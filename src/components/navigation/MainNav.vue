@@ -3,9 +3,12 @@
     <div
       class="flex h-16 items-center border-b border-solid border-brand-gray-1 px-8"
     >
-      <a href="/" class="flex h-full items-center text-xl text-black">
+      <router-link
+        :to="{ name: 'Home' }"
+        class="flex h-full items-center text-xl text-black"
+      >
         danulqua Careers
-      </a>
+      </router-link>
       <nav class="ml-12 h-full">
         <ul class="flex h-full items-center space-x-6">
           <li
