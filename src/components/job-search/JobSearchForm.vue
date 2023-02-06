@@ -1,5 +1,8 @@
 <template>
-  <form class="flex h-12 items-center rounded-3xl border border-brand-gray-3">
+  <form
+    class="flex h-12 items-center rounded-3xl border border-brand-gray-3"
+    @submit.prevent="handleFormSubmit"
+  >
     <fa-icon :icon="['fas', 'search']" class="mx-4" />
 
     <div class="flex h-full flex-1 flex-nowrap text-base font-light">
@@ -20,11 +23,7 @@
 
       <div class="border-bottom relative flex h-full flex-1 items-center">
         <label class="absolute left-3 -top-8">Where?</label>
-        <TextInput
-          v-model="location"
-          placeholder="Software engineer"
-          class="pl-3"
-        />
+        <TextInput v-model="location" placeholder="Los Angeles" class="pl-3" />
       </div>
     </div>
 
@@ -48,6 +47,14 @@ export default {
       role: '',
       location: '',
     };
+  },
+  methods: {
+    handleFormSubmit() {
+      this.$router.push({
+        name: 'JobsResults',
+        query: { role: this.role, location: this.location },
+      });
+    },
   },
 };
 </script>
