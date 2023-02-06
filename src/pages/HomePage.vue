@@ -10,3 +10,4 @@ export default {
   components: { Hero },
 };
 </script>
+kubernetes

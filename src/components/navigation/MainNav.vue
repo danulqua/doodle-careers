@@ -16,7 +16,9 @@
             :key="item.text"
             class="flex h-full items-center"
           >
-            <a :href="item.to" class="py-2.5 text-sm">{{ item.text }}</a>
+            <router-link :to="item.to" class="py-2.5 text-sm">{{
+              item.text
+            }}</router-link>
           </li>
         </ul>
       </nav>
@@ -42,27 +44,27 @@ export default {
       links: [
         {
           text: 'Teams',
-          to: '#',
+          to: '/',
         },
         {
           text: 'Locations',
-          to: '#',
+          to: '/',
         },
         {
           text: 'Life at danulqua Corp',
-          to: '#',
+          to: '/',
         },
         {
           text: 'How we hire',
-          to: '#',
+          to: '/',
         },
         {
           text: 'Students',
-          to: '#',
+          to: '/',
         },
         {
           text: 'Jobs',
-          to: '#',
+          to: '/jobs/results',
         },
       ],
       isLoggedIn: false,
