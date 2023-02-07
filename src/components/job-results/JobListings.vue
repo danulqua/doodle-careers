@@ -45,7 +45,8 @@ export default {
     };
   },
   mounted() {
-    axios.get('http://localhost:3000/jobs').then((res) => {
+    const baseUrl = import.meta.env.VITE_APP_API_URL;
+    axios.get(`${baseUrl}/jobs`).then((res) => {
       this.jobs = res.data;
     });
   },

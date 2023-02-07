@@ -5,6 +5,7 @@ import axios from 'axios';
 import JobListings from '@/components/job-results/JobListings.vue';
 
 vi.mock('axios');
+const baseUrl = import.meta.env.VITE_APP_API_URL;
 
 describe('JobListings', () => {
   function createRoute(queryParams = {}) {
@@ -33,7 +34,7 @@ describe('JobListings', () => {
     const $route = createRoute({ page: '5' });
     renderJobListings($route);
 
-    expect(axios.get).toHaveBeenCalledWith('http://localhost:3000/jobs');
+    expect(axios.get).toHaveBeenCalledWith(`${baseUrl}/jobs`);
   });
 
   it('displays a maximum of 10 jobs', async () => {
