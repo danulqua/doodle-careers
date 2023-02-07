@@ -3,6 +3,30 @@
     <ol>
       <JobListing v-for="job in displayedJobsList" :key="job.id" :job="job" />
     </ol>
+
+    <div class="mx-auto mt-8">
+      <div class="flex flex-nowrap">
+        <p class="flex-grow text-sm">Page {{ currentPage }}</p>
+
+        <div class="flex items-center justify-center">
+          <router-link
+            v-if="previousPage"
+            :to="{ name: 'JobsResults', query: { page: previousPage } }"
+            class="mx-3 text-sm font-semibold text-brand-blue-1"
+          >
+            Previous
+          </router-link>
+
+          <router-link
+            v-if="nextPage"
+            :to="{ name: 'JobsResults', query: { page: nextPage } }"
+            class="mx-3 text-sm font-semibold text-brand-blue-1"
+          >
+            Next
+          </router-link>
+        </div>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -24,8 +48,20 @@ export default {
     });
   },
   computed: {
+    currentPage() {
+      return Number.parseInt(this.$route.query.page) || 1;
+    },
+    previousPage() {
+      const previousPage = this.currentPage - 1;
+      return previousPage >= 1 ? previousPage : undefined;
+    },
+    nextPage() {
+      const nextPage = this.currentPage + 1;
+      const maxPage = this.jobs.length / 10;
+      return nextPage <= maxPage ? nextPage : undefined;
+    },
     displayedJobsList() {
-      const page = Number.parseInt(this.$route.query.page) || 1;
+      const page = this.currentPage;
       const firstIdx = (page - 1) * 10;
       const secondIdx = page * 10;
 
