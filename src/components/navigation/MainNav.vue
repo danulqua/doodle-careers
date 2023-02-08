@@ -27,11 +27,15 @@
         <ActionButton v-else text="Sign in" @click="login" />
       </div>
     </div>
-    <Subnav v-if="isLoggedIn" />
+    <Subnav v-if="userStore.isLoggedIn" />
   </header>
 </template>
 
 <script>
+import { mapStores } from 'pinia';
+
+import { useUserStore } from '@/stores/user';
+
 import ActionButton from '@/components/common/ActionButton.vue';
 import ProfileImage from '@/components/navigation/ProfileImage.vue';
 import Subnav from '@/components/navigation/Subnav.vue';
@@ -67,13 +71,15 @@ export default {
           to: '/jobs/results',
         },
       ],
-      isLoggedIn: false,
     };
   },
   methods: {
     login() {
       this.isLoggedIn = true;
     },
+  },
+  computed: {
+    ...mapStores(useUserStore),
   },
 };
 </script>
