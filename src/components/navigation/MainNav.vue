@@ -23,8 +23,8 @@
         </ul>
       </nav>
       <div class="ml-auto flex h-full items-center">
-        <ProfileImage v-if="isLoggedIn" />
-        <ActionButton v-else text="Sign in" @click="login" />
+        <ProfileImage v-if="userStore.isLoggedIn" />
+        <ActionButton v-else text="Sign in" @click="userStore.loginUser" />
       </div>
     </div>
     <Subnav v-if="userStore.isLoggedIn" />
@@ -72,11 +72,6 @@ export default {
         },
       ],
     };
-  },
-  methods: {
-    login() {
-      this.isLoggedIn = true;
-    },
   },
   computed: {
     ...mapStores(useUserStore),
