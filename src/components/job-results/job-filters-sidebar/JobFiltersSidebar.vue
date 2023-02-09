@@ -7,45 +7,18 @@
           <ActionButton text="Clear filters" type="secondary" />
         </div>
       </div>
-
-      <CollapsibleAccordion title="Organization">
-        <div class="mt-5">
-          <fieldset>
-            <ul class="flex flex-wrap">
-              <li class="h-8 w-1/2">
-                <input type="checkbox" id="VueTube" class="mr-3" />
-                <label for="VueTube">VueTube</label>
-              </li>
-              <li class="h-8 w-1/2">
-                <input type="checkbox" id="VueTube" class="mr-3" />
-                <label for="VueTube">VueTube</label>
-              </li>
-              <li class="h-8 w-1/2">
-                <input type="checkbox" id="VueTube" class="mr-3" />
-                <label for="VueTube">Halfman is our everything</label>
-              </li>
-              <li class="h-8 w-1/2">
-                <input type="checkbox" id="VueTube" class="mr-3" />
-                <label for="VueTube">VueTube</label>
-              </li>
-              <li class="h-8 w-1/2">
-                <input type="checkbox" id="VueTube" class="mr-3" />
-                <label for="VueTube">VueTube</label>
-              </li>
-            </ul>
-          </fieldset>
-        </div>
-      </CollapsibleAccordion>
     </section>
+
+    <JobFiltersSidebarOrganizations />
   </div>
 </template>
 
 <script>
 import ActionButton from '@/components/common/ActionButton.vue';
-import CollapsibleAccordion from '@/components/common/CollapsibleAccordion.vue';
+import JobFiltersSidebarOrganizations from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarOrganizations.vue';
 
 export default {
   name: 'JobFiltersSidebar',
-  components: { ActionButton, CollapsibleAccordion },
+  components: { ActionButton, JobFiltersSidebarOrganizations },
 };
 </script>
