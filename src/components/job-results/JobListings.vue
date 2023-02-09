@@ -33,22 +33,19 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { mapActions, mapState } from 'pinia';
+
 import JobListing from '@/components/job-results/JobListing.vue';
+import { useJobsStore, FETCH_JOBS } from '@/stores/jobs';
 
 export default {
   name: 'JobListings',
   components: { JobListing },
-  data() {
-    return {
-      jobs: [],
-    };
-  },
   mounted() {
-    const baseUrl = import.meta.env.VITE_APP_API_URL;
-    axios.get(`${baseUrl}/jobs`).then((res) => {
-      this.jobs = res.data;
-    });
+    this.FETCH_JOBS();
+  },
+  methods: {
+    ...mapActions(useJobsStore, [FETCH_JOBS]),
   },
   computed: {
     currentPage() {
@@ -58,18 +55,21 @@ export default {
       const previousPage = this.currentPage - 1;
       return previousPage >= 1 ? previousPage : undefined;
     },
-    nextPage() {
-      const nextPage = this.currentPage + 1;
-      const maxPage = Math.ceil(this.jobs.length / 10);
-      return nextPage <= maxPage ? nextPage : undefined;
-    },
-    displayedJobsList() {
-      const page = this.currentPage;
-      const firstIdx = (page - 1) * 10;
-      const secondIdx = page * 10;
+    ...mapState(useJobsStore, {
+      jobs: 'jobs',
+      nextPage() {
+        const nextPage = this.currentPage + 1;
+        const maxPage = Math.ceil(this.jobs.length / 10);
+        return nextPage <= maxPage ? nextPage : undefined;
+      },
+      displayedJobsList() {
+        const page = this.currentPage;
+        const firstIdx = (page - 1) * 10;
+        const secondIdx = page * 10;
 
-      return this.jobs.slice(firstIdx, secondIdx);
-    },
+        return this.jobs.slice(firstIdx, secondIdx);
+      },
+    }),
   },
 };
 </script>
