@@ -27,7 +27,7 @@ describe('MainNav', () => {
   });
 
   it('displays brand name', () => {
-    const company = screen.getByText('danulqua Careers');
+    const company = screen.getByText('Doodle Careers');
     expect(company).toBeInTheDocument();
   });
 

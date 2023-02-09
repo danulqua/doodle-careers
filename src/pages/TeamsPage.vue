@@ -1,10 +1,10 @@
 <template>
   <HeaderContainer>
-    <template v-slot:title>
+    <template #title>
       <h1 class="w-full text-4xl">Teams</h1>
     </template>
 
-    <template v-slot:subtitle>
+    <template #subtitle>
       <h2 slot="subtitle" class="my-4 w-full font-light">
         Together, we create access to information and build products that
         improve people's lives. Want to be a Doodler? Find your role.
