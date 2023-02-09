@@ -2,19 +2,28 @@
   <div class="border-b border-brand-gray-2 py-5">
     <div
       class="flex cursor-pointer flex-wrap items-center justify-between"
+      role="button"
       @click="toggle"
     >
-      <h3 class="text-base font-semibold">Organization</h3>
+      <h3 class="text-base font-semibold">{{ title }}</h3>
       <fa-icon :icon="arrowIcon" />
     </div>
 
-    <div v-if="isOpen" class="mt-5 w-full">Child</div>
+    <div v-if="isOpen" class="mt-5 w-full">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'CollapsibleAccordion',
+  props: {
+    title: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       isOpen: false,
