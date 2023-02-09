@@ -26,4 +26,27 @@ describe('CollapsibleAccordion', () => {
     await userEvent.click(button);
     expect(screen.getByText('Nested child')).toBeInTheDocument();
   });
+
+  describe('when parent does not provide a content to the accordion', () => {
+    it('displays fallback content', async () => {
+      render(CollapsibleAccordion, {
+        global: {
+          stubs: {
+            FaIcon: true,
+          },
+        },
+        props: {
+          title: 'Category',
+        },
+      });
+
+      const button = screen.getByRole('button', {
+        name: /category/i,
+      });
+      await userEvent.click(button);
+      expect(
+        screen.getByText('Fallback for accordion content')
+      ).toBeInTheDocument();
+    });
+  });
 });
