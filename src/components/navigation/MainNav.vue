@@ -7,7 +7,7 @@
         :to="{ name: 'Home' }"
         class="flex h-full items-center text-xl text-black"
       >
-        danulqua Careers
+        Doodle Careers
       </router-link>
       <nav class="ml-12 h-full">
         <ul class="flex h-full items-center space-x-6">
@@ -48,7 +48,7 @@ export default {
       links: [
         {
           text: 'Teams',
-          to: '/',
+          to: '/teams',
         },
         {
           text: 'Locations',

@@ -27,7 +27,7 @@
       </div>
       <br />for everyone
     </h1>
-    <h2 class="text-light text-3xl">Find your next job at danulqua Corp.</h2>
+    <h2 class="text-light text-3xl">Find your next job at Doodle.</h2>
   </section>
 </template>
 

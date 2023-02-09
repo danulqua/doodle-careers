@@ -2,7 +2,8 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 
 import HomePage from '@/pages/HomePage.vue';
 import JobsResultsPage from '@/pages/JobsResultsPage.vue';
-import JobDetails from '@/pages/JobDetails.vue';
+import JobDetails from '@/pages/JobDetailsPage.vue';
+import TeamsPage from '@/pages/TeamsPage.vue';
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     path: '/jobs/results/:id',
     name: 'JobDetails',
     component: JobDetails,
+  },
+  {
+    path: '/teams',
+    name: 'JobDetails',
+    component: TeamsPage,
   },
 ];
 
