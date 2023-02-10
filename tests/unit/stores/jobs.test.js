@@ -82,5 +82,25 @@ describe('getters', () => {
         { organization: 'Woohoo' },
       ]);
     });
+
+    describe('when user has not selected any organizations', () => {
+      it('returns all jobs', () => {
+        const store = useJobsStore();
+        store.jobs = [
+          { organization: 'Doodle' },
+          { organization: 'Megasoft' },
+          { organization: 'Woohoo' },
+        ];
+
+        store.selectedOrganizations = [];
+
+        const result = store.FILTERED_JOBS_BY_ORGANIZATIONS;
+        expect(result).toEqual([
+          { organization: 'Doodle' },
+          { organization: 'Megasoft' },
+          { organization: 'Woohoo' },
+        ]);
+      });
+    });
   });
 });
