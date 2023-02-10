@@ -60,8 +60,27 @@ describe('getters', () => {
         { organization: 'Doodle' },
       ];
 
-      const uniqueOrganizations = store.UNIQUE_ORGANIZATIONS;
-      expect(uniqueOrganizations).toEqual(new Set(['Doodle', 'Megasoft']));
+      const result = store.UNIQUE_ORGANIZATIONS;
+      expect(result).toEqual(new Set(['Doodle', 'Megasoft']));
+    });
+  });
+
+  describe('FILTERED_JOBS_BY_ORGANIZATIONS', () => {
+    it('finds jobs which satisfy selected organizations', () => {
+      const store = useJobsStore();
+      store.jobs = [
+        { organization: 'Doodle' },
+        { organization: 'Megasoft' },
+        { organization: 'Woohoo' },
+      ];
+
+      store.selectedOrganizations = ['Doodle', 'Woohoo'];
+
+      const result = store.FILTERED_JOBS_BY_ORGANIZATIONS;
+      expect(result).toEqual([
+        { organization: 'Doodle' },
+        { organization: 'Woohoo' },
+      ]);
     });
   });
 });
