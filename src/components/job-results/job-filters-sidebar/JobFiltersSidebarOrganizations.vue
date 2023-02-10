@@ -14,6 +14,7 @@
               v-model="selectedOrganizations"
               :value="organization"
               class="cursor-pointer"
+              @change="selectOrganization"
             />
             <label :for="organization" class="h-full cursor-pointer pr-4">
               {{ organization }}
@@ -26,8 +27,12 @@
 </template>
 
 <script>
-import { mapState } from 'pinia';
-import { UNIQUE_ORGANIZATIONS, useJobsStore } from '@/stores/jobs';
+import { mapState, mapActions } from 'pinia';
+import {
+  useJobsStore,
+  UNIQUE_ORGANIZATIONS,
+  UPDATE_SELECTED_ORGANIZATIONS,
+} from '@/stores/jobs';
 
 import CollapsibleAccordion from '@/components/common/CollapsibleAccordion.vue';
 
@@ -41,6 +46,12 @@ export default {
   },
   computed: {
     ...mapState(useJobsStore, [UNIQUE_ORGANIZATIONS]),
+  },
+  methods: {
+    ...mapActions(useJobsStore, [UPDATE_SELECTED_ORGANIZATIONS]),
+    selectOrganization() {
+      this.UPDATE_SELECTED_ORGANIZATIONS(this.selectedOrganizations);
+    },
   },
 };
 </script>
