@@ -4,14 +4,19 @@ import getJobs from '@/api/getJobs';
 
 export const FETCH_JOBS = 'FETCH_JOBS';
 export const UNIQUE_ORGANIZATIONS = 'UNIQUE_ORGANIZATIONS';
+export const UPDATE_SELECTED_ORGANIZATIONS = 'UPDATE_SELECTED_ORGANIZATIONS';
 
 export const useJobsStore = defineStore('jobs', {
   state: () => ({
     jobs: [],
+    selectedOrganizations: [],
   }),
   actions: {
     async [FETCH_JOBS]() {
       this.jobs = await getJobs();
+    },
+    [UPDATE_SELECTED_ORGANIZATIONS](organizations) {
+      this.selectedOrganizations = organizations;
     },
   },
   getters: {

@@ -14,6 +14,11 @@ describe('state', () => {
     const store = useJobsStore();
     expect(store.jobs).toEqual([]);
   });
+
+  it('stores selected organizations', () => {
+    const store = useJobsStore();
+    expect(store.selectedOrganizations).toEqual([]);
+  });
 });
 
 describe('actions', () => {
@@ -29,6 +34,14 @@ describe('actions', () => {
       await store.FETCH_JOBS();
 
       expect(store.jobs).toEqual(['job 1', 'job 2']);
+    });
+  });
+
+  describe('UPDATE_SELECTED_ORGANIZATIONS', () => {
+    it('updates selected organizations with a new set of organizations chosen by user', () => {
+      const store = useJobsStore();
+      store.UPDATE_SELECTED_ORGANIZATIONS(['Org1', 'Org2']);
+      expect(store.selectedOrganizations).toEqual(['Org1', 'Org2']);
     });
   });
 });

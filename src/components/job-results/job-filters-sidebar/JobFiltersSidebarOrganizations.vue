@@ -8,7 +8,13 @@
             :key="organization"
             class="flex min-h-[32px] w-1/2 items-baseline space-x-2"
           >
-            <input type="checkbox" :id="organization" class="cursor-pointer" />
+            <input
+              type="checkbox"
+              :id="organization"
+              v-model="selectedOrganizations"
+              :value="organization"
+              class="cursor-pointer"
+            />
             <label :for="organization" class="h-full cursor-pointer pr-4">
               {{ organization }}
             </label>
@@ -28,6 +34,11 @@ import CollapsibleAccordion from '@/components/common/CollapsibleAccordion.vue';
 export default {
   name: 'JobFiltersSidebarOrganizations',
   components: { CollapsibleAccordion },
+  data() {
+    return {
+      selectedOrganizations: [],
+    };
+  },
   computed: {
     ...mapState(useJobsStore, [UNIQUE_ORGANIZATIONS]),
   },
