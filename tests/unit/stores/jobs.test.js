@@ -92,6 +92,108 @@ describe('getters', () => {
     });
   });
 
+  describe('SHOULD_INCLUDE_JOB_BY_ORGANIZATION', () => {
+    describe('when user has not selected any organization', () => {
+      it('includes job', () => {
+        const store = useJobsStore();
+        store.jobs = [
+          { organization: 'Doodle' },
+          { organization: 'Megasoft' },
+          { organization: 'Woohoo' },
+        ];
+
+        store.selectedOrganizations = [];
+        const result = store.SHOULD_INCLUDE_JOB_BY_ORGANIZATION({
+          organization: 'Doodle',
+        });
+        expect(result).toBe(true);
+      });
+    });
+
+    describe('when user has selected organization', () => {
+      it('returns the associated job', () => {
+        const store = useJobsStore();
+        store.jobs = [
+          { organization: 'Doodle' },
+          { organization: 'Megasoft' },
+          { organization: 'Woohoo' },
+        ];
+
+        store.selectedOrganizations = ['Doodle', 'Woohoo'];
+        const result = store.SHOULD_INCLUDE_JOB_BY_ORGANIZATION({
+          organization: 'Doodle',
+        });
+        expect(result).toBe(true);
+      });
+    });
+
+    it('does not return the job that is not associated', () => {
+      const store = useJobsStore();
+      store.jobs = [
+        { organization: 'Doodle' },
+        { organization: 'Megasoft' },
+        { organization: 'Woohoo' },
+      ];
+
+      store.selectedOrganizations = ['Doodle', 'Woohoo'];
+      const result = store.SHOULD_INCLUDE_JOB_BY_ORGANIZATION({
+        organization: 'Megasoft',
+      });
+      expect(result).toBe(false);
+    });
+  });
+
+  describe('SHOULD_INCLUDE_JOB_BY_JOB_TYPE', () => {
+    describe('when user has not selected any job type', () => {
+      it('includes job', () => {
+        const store = useJobsStore();
+        store.jobs = [
+          { jobType: 'Full-time' },
+          { jobType: 'Part-time' },
+          { jobType: 'Temporary' },
+        ];
+
+        store.selectedJobTypes = [];
+        const result = store.SHOULD_INCLUDE_JOB_BY_JOB_TYPE({
+          jobType: 'Full-time',
+        });
+        expect(result).toBe(true);
+      });
+    });
+
+    describe('when user has selected job type', () => {
+      it('returns the associated job', () => {
+        const store = useJobsStore();
+        store.jobs = [
+          { jobType: 'Full-time' },
+          { jobType: 'Part-time' },
+          { jobType: 'Temporary' },
+        ];
+
+        store.selectedJobTypes = ['Full-time', 'Temporary'];
+        const result = store.SHOULD_INCLUDE_JOB_BY_JOB_TYPE({
+          jobType: 'Full-time',
+        });
+        expect(result).toBe(true);
+      });
+    });
+
+    it('does not return the job that is not associated', () => {
+      const store = useJobsStore();
+      store.jobs = [
+        { jobType: 'Full-time' },
+        { jobType: 'Part-time' },
+        { jobType: 'Temporary' },
+      ];
+
+      store.selectedJobTypes = ['Full-time', 'Temporary'];
+      const result = store.SHOULD_INCLUDE_JOB_BY_JOB_TYPE({
+        jobType: 'Part-time',
+      });
+      expect(result).toBe(false);
+    });
+  });
+
   describe('FILTERED_JOBS_BY_ORGANIZATIONS', () => {
     it('finds jobs which satisfy selected organizations', () => {
       const store = useJobsStore();
