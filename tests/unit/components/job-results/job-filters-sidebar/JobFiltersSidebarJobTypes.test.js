@@ -1,27 +1,31 @@
 import { render, screen } from '@testing-library/vue';
 import userEvent from '@testing-library/user-event';
 import { createTestingPinia } from '@pinia/testing';
+import { useRouter } from 'vue-router';
 
 import JobFiltersSidebarJobTypes from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarJobTypes.vue';
 import { useJobsStore } from '@/stores/jobs';
+
+vi.mock('vue-router');
 
 describe('JobFiltersSidebarJobTypes', () => {
   function renderJobFiltersSidebarJobTypes() {
     const pinia = createTestingPinia();
     const jobsStore = useJobsStore();
-    const $router = { push: vi.fn() };
+
+    const router = { push: vi.fn() };
+    useRouter.mockReturnValue(router);
 
     render(JobFiltersSidebarJobTypes, {
       global: {
         plugins: [pinia],
-        mocks: { $router },
         stubs: {
           FaIcon: true,
         },
       },
     });
 
-    return { jobsStore, $router };
+    return { jobsStore, router };
   }
 
   it('renders unique list of jobTypes from jobs', async () => {
@@ -59,7 +63,7 @@ describe('JobFiltersSidebarJobTypes', () => {
     });
 
     it('navigates to JobsResults page to display a new list of filtered jobs', async () => {
-      const { jobsStore, $router } = renderJobFiltersSidebarJobTypes();
+      const { jobsStore, router } = renderJobFiltersSidebarJobTypes();
       jobsStore.UNIQUE_JOB_TYPES = new Set(['Full-time']);
 
       const button = screen.getByRole('button', {
@@ -72,7 +76,7 @@ describe('JobFiltersSidebarJobTypes', () => {
       });
       await userEvent.click(fullTimeCheckbox);
 
-      expect($router.push).toHaveBeenCalledWith({ name: 'JobsResults' });
+      expect(router.push).toHaveBeenCalledWith({ name: 'JobsResults' });
     });
   });
 });
