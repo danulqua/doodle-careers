@@ -32,44 +32,35 @@
   </main>
 </template>
 
-<script>
-import { mapState, mapActions } from 'pinia';
+<script setup>
+import { computed, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 
 import JobListing from '@/components/job-results/JobListing.vue';
-import { useJobsStore, FETCH_JOBS, FILTERED_JOBS } from '@/stores/jobs';
+import { useJobsStore } from '@/stores/jobs';
 
-export default {
-  name: 'JobListings',
-  components: { JobListing },
-  computed: {
-    currentPage() {
-      return Number.parseInt(this.$route.query.page) || 1;
-    },
-    previousPage() {
-      const previousPage = this.currentPage - 1;
-      return previousPage >= 1 ? previousPage : undefined;
-    },
-    ...mapState(useJobsStore, {
-      FILTERED_JOBS,
-      nextPage() {
-        const nextPage = this.currentPage + 1;
-        const maxPage = Math.ceil(this.FILTERED_JOBS.length / 10);
-        return nextPage <= maxPage ? nextPage : undefined;
-      },
-      displayedJobsList() {
-        const page = this.currentPage;
-        const firstIdx = (page - 1) * 10;
-        const secondIdx = page * 10;
+const jobsStore = useJobsStore();
+onMounted(jobsStore.FETCH_JOBS);
 
-        return this.FILTERED_JOBS.slice(firstIdx, secondIdx);
-      },
-    }),
-  },
-  mounted() {
-    this.FETCH_JOBS();
-  },
-  methods: {
-    ...mapActions(useJobsStore, [FETCH_JOBS]),
-  },
-};
+const route = useRoute();
+const currentPage = computed(() => Number.parseInt(route.query.page || 1));
+const previousPage = computed(() => {
+  const previousPage = currentPage.value - 1;
+  return previousPage >= 1 ? previousPage : undefined;
+});
+
+const FILTERED_JOBS = computed(() => jobsStore.FILTERED_JOBS);
+
+const nextPage = computed(() => {
+  const nextPage = currentPage.value + 1;
+  const maxPage = Math.ceil(FILTERED_JOBS.value.length / 10);
+  return nextPage <= maxPage ? nextPage : undefined;
+});
+
+const displayedJobsList = computed(() => {
+  const page = currentPage.value;
+  const firstIdx = (page - 1) * 10;
+  const secondIdx = page * 10;
+  return FILTERED_JOBS.value.slice(firstIdx, secondIdx);
+});
 </script>
