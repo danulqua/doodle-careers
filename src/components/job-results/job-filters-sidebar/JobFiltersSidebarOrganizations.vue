@@ -51,6 +51,7 @@ export default {
     ...mapActions(useJobsStore, [UPDATE_SELECTED_ORGANIZATIONS]),
     selectOrganization() {
       this.UPDATE_SELECTED_ORGANIZATIONS(this.selectedOrganizations);
+      this.$router.push({ name: 'JobsResults' });
     },
   },
 };

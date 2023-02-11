@@ -51,6 +51,7 @@ export default {
     ...mapActions(useJobsStore, [UPDATE_SELECTED_JOB_TYPES]),
     selectJobType() {
       this.UPDATE_SELECTED_JOB_TYPES(this.selectedJobTypes);
+      this.$router.push({ name: 'JobsResults' });
     },
   },
 };
