@@ -22,7 +22,7 @@ describe('state', () => {
 
   it('stores selected types', () => {
     const store = useJobsStore();
-    expect(store.selectedTypes).toEqual([]);
+    expect(store.selectedJobTypes).toEqual([]);
   });
 });
 
@@ -126,6 +126,45 @@ describe('getters', () => {
           { organization: 'Doodle' },
           { organization: 'Megasoft' },
           { organization: 'Woohoo' },
+        ]);
+      });
+    });
+  });
+
+  describe('FILTERED_JOBS_BY_JOB_TYPES', () => {
+    it('finds jobs which satisfy selected job types', () => {
+      const store = useJobsStore();
+      store.jobs = [
+        { jobType: 'Full-time' },
+        { jobType: 'Part-time' },
+        { jobType: 'Temporary' },
+      ];
+
+      store.selectedJobTypes = ['Full-time', 'Temporary'];
+
+      const result = store.FILTERED_JOBS_BY_JOB_TYPES;
+      expect(result).toEqual([
+        { jobType: 'Full-time' },
+        { jobType: 'Temporary' },
+      ]);
+    });
+
+    describe('when user has not selected any job types', () => {
+      it('returns all jobs', () => {
+        const store = useJobsStore();
+        store.jobs = [
+          { jobType: 'Full-time' },
+          { jobType: 'Part-time' },
+          { jobType: 'Temporary' },
+        ];
+
+        store.selectedJobTypes = [];
+
+        const result = store.FILTERED_JOBS_BY_JOB_TYPES;
+        expect(result).toEqual([
+          { jobType: 'Full-time' },
+          { jobType: 'Part-time' },
+          { jobType: 'Temporary' },
         ]);
       });
     });
