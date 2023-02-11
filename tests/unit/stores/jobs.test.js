@@ -54,7 +54,7 @@ describe('actions', () => {
     it('updates selected job types with a new set of job types chosen by user', () => {
       const store = useJobsStore();
       store.UPDATE_SELECTED_JOB_TYPES(['Full-time', 'Part-time']);
-      expect(store.selectedTypes).toEqual(['Full-time', 'Part-time']);
+      expect(store.selectedJobTypes).toEqual(['Full-time', 'Part-time']);
     });
   });
 });

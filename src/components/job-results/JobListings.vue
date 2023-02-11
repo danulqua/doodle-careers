@@ -36,11 +36,7 @@
 import { mapState, mapActions } from 'pinia';
 
 import JobListing from '@/components/job-results/JobListing.vue';
-import {
-  useJobsStore,
-  FETCH_JOBS,
-  FILTERED_JOBS_BY_ORGANIZATIONS,
-} from '@/stores/jobs';
+import { useJobsStore, FETCH_JOBS, FILTERED_JOBS } from '@/stores/jobs';
 
 export default {
   name: 'JobListings',
@@ -60,12 +56,10 @@ export default {
       return previousPage >= 1 ? previousPage : undefined;
     },
     ...mapState(useJobsStore, {
-      FILTERED_JOBS_BY_ORGANIZATIONS,
+      FILTERED_JOBS,
       nextPage() {
         const nextPage = this.currentPage + 1;
-        const maxPage = Math.ceil(
-          this.FILTERED_JOBS_BY_ORGANIZATIONS.length / 10
-        );
+        const maxPage = Math.ceil(this.FILTERED_JOBS.length / 10);
         return nextPage <= maxPage ? nextPage : undefined;
       },
       displayedJobsList() {
@@ -73,7 +67,7 @@ export default {
         const firstIdx = (page - 1) * 10;
         const secondIdx = page * 10;
 
-        return this.FILTERED_JOBS_BY_ORGANIZATIONS.slice(firstIdx, secondIdx);
+        return this.FILTERED_JOBS.slice(firstIdx, secondIdx);
       },
     }),
   },
