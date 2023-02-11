@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-96 flex-col border-r border-brand-gray-1 bg-white p-4">
-    <section class="pb-5">
+    <section>
       <div class="flex justify-between">
         <h3 class="my-4 text-base font-semibold">What do you want to do?</h3>
         <div class="flex items-center text-sm">
@@ -9,6 +9,7 @@
       </div>
     </section>
 
+    <JobFiltersSidebarJobTypes />
     <JobFiltersSidebarOrganizations />
   </div>
 </template>
@@ -16,9 +17,14 @@
 <script>
 import ActionButton from '@/components/common/ActionButton.vue';
 import JobFiltersSidebarOrganizations from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarOrganizations.vue';
+import JobFiltersSidebarJobTypes from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarJobTypes.vue';
 
 export default {
   name: 'JobFiltersSidebar',
-  components: { ActionButton, JobFiltersSidebarOrganizations },
+  components: {
+    ActionButton,
+    JobFiltersSidebarOrganizations,
+    JobFiltersSidebarJobTypes,
+  },
 };
 </script>
