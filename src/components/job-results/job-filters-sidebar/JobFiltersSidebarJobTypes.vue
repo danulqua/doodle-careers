@@ -30,9 +30,9 @@
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { useJobsStore } from '@/stores/jobs';
-
 import CollapsibleAccordion from '@/components/common/CollapsibleAccordion.vue';
+
+import { useJobsStore } from '@/stores/jobs';
 
 const selectedJobTypes = ref([]);
 

@@ -1,27 +1,30 @@
 import { render, screen } from '@testing-library/vue';
 import userEvent from '@testing-library/user-event';
 import { createTestingPinia } from '@pinia/testing';
+import { useRouter } from 'vue-router';
 
 import JobFiltersSidebarOrganizations from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarOrganizations.vue';
 import { useJobsStore } from '@/stores/jobs';
+
+vi.mock('vue-router');
 
 describe('JobFiltersSidebarOrganizations', () => {
   function renderJobFiltersSidebarOrganizations() {
     const pinia = createTestingPinia();
     const jobsStore = useJobsStore();
-    const $router = { push: vi.fn() };
+    const router = { push: vi.fn() };
+    useRouter.mockReturnValue(router);
 
     render(JobFiltersSidebarOrganizations, {
       global: {
         plugins: [pinia],
-        mocks: { $router },
         stubs: {
           FaIcon: true,
         },
       },
     });
 
-    return { jobsStore, $router };
+    return { jobsStore, router };
   }
 
   it('renders unique list of organizations from jobs', async () => {
@@ -59,7 +62,7 @@ describe('JobFiltersSidebarOrganizations', () => {
     });
 
     it('navigates to JobsResults page to display a new list of filtered jobs', async () => {
-      const { jobsStore, $router } = renderJobFiltersSidebarOrganizations();
+      const { jobsStore, router } = renderJobFiltersSidebarOrganizations();
       jobsStore.UNIQUE_ORGANIZATIONS = new Set(['Doodle']);
 
       const button = screen.getByRole('button', {
@@ -72,7 +75,7 @@ describe('JobFiltersSidebarOrganizations', () => {
       });
       await userEvent.click(doodleCheckbox);
 
-      expect($router.push).toHaveBeenCalledWith({ name: 'JobsResults' });
+      expect(router.push).toHaveBeenCalledWith({ name: 'JobsResults' });
     });
   });
 });
