@@ -1,13 +1,13 @@
 <template>
-  <Hero />
+  <TheHero />
 </template>
 
 <script>
-import Hero from '@/components/job-search/Hero.vue';
+import TheHero from '@/components/job-search/TheHero.vue';
 
 export default {
   name: 'HomePage',
-  components: { Hero },
+  components: { TheHero },
 };
 </script>
 kubernetes

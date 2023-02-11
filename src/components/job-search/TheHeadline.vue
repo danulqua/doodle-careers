@@ -35,7 +35,8 @@
 import rearrangeListItems from '@/utils/rearrangeListItems';
 
 export default {
-  name: 'Headline',
+  name: 'TheHeadline',
+  emits: ['change'],
   data() {
     return {
       actions: ['Build', 'Create', 'Design', 'Code'],

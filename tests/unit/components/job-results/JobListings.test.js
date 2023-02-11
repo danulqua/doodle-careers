@@ -5,8 +5,6 @@ import { createTestingPinia } from '@pinia/testing';
 import JobListings from '@/components/job-results/JobListings.vue';
 import { useJobsStore } from '@/stores/jobs';
 
-const baseUrl = import.meta.env.VITE_APP_API_URL;
-
 describe('JobListings', () => {
   function createRoute(queryParams = {}) {
     return {

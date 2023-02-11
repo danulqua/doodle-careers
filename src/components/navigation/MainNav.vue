@@ -27,7 +27,7 @@
         <ActionButton v-else text="Sign in" @click="userStore.LOGIN_USER" />
       </div>
     </div>
-    <Subnav v-if="userStore.isLoggedIn" />
+    <SubNav v-if="userStore.isLoggedIn" />
   </header>
 </template>
 
@@ -38,11 +38,11 @@ import { useUserStore } from '@/stores/user';
 
 import ActionButton from '@/components/common/ActionButton.vue';
 import ProfileImage from '@/components/navigation/ProfileImage.vue';
-import Subnav from '@/components/navigation/Subnav.vue';
+import SubNav from '@/components/navigation/SubNav.vue';
 
 export default {
   name: 'MainNav',
-  components: { ActionButton, ProfileImage, Subnav },
+  components: { ActionButton, ProfileImage, SubNav },
   data() {
     return {
       links: [

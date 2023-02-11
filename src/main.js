@@ -22,6 +22,6 @@ const app = createApp(App);
 
 app.use(pinia);
 app.use(router);
-app.component('fa-icon', FontAwesomeIcon);
+app.component('FaIcon', FontAwesomeIcon);
 
 app.mount('#app');

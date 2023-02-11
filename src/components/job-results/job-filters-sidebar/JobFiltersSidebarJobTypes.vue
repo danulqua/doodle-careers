@@ -9,9 +9,9 @@
             class="flex min-h-[32px] w-1/2 items-baseline space-x-2"
           >
             <input
-              type="checkbox"
               :id="jobType"
               v-model="selectedJobTypes"
+              type="checkbox"
               :value="jobType"
               class="cursor-pointer"
               @change="selectJobType"

@@ -15,7 +15,7 @@ import { mapState } from 'pinia';
 import { useJobsStore, FILTERED_JOBS } from '@/stores/jobs';
 
 export default {
-  name: 'Subnav',
+  name: 'SubNav',
   computed: {
     ...mapState(useJobsStore, {
       FILTERED_JOBS,

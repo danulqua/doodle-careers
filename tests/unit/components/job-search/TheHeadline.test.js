@@ -1,7 +1,7 @@
 import { nextTick } from 'vue';
 import { render, screen, fireEvent } from '@testing-library/vue';
 
-import Headline from '@/components/job-search/Headline.vue';
+import TheHeadline from '@/components/job-search/TheHeadline.vue';
 
 describe('Headline', () => {
   beforeEach(() => {
@@ -13,7 +13,7 @@ describe('Headline', () => {
   });
 
   it('displays first action verb', () => {
-    render(Headline);
+    render(TheHeadline);
     const actions = screen.getAllByRole('Action');
     expect(actions[0].textContent).toBe('Build');
   });
@@ -22,13 +22,13 @@ describe('Headline', () => {
     const mock = vi.fn();
     vi.stubGlobal('setInterval', mock);
 
-    render(Headline);
+    render(TheHeadline);
 
     expect(mock).toHaveBeenCalled();
   });
 
   it('swaps action verb after interval', async () => {
-    render(Headline);
+    render(TheHeadline);
     vi.advanceTimersToNextTimer();
 
     fireEvent.transitionEnd(screen.getByTestId('scrollableActions'));
@@ -42,7 +42,7 @@ describe('Headline', () => {
     const clearInterval = vi.fn();
     vi.stubGlobal('clearInterval', clearInterval);
 
-    const { unmount } = render(Headline);
+    const { unmount } = render(TheHeadline);
     unmount();
 
     expect(clearInterval).toHaveBeenCalled();

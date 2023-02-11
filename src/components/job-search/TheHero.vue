@@ -7,7 +7,7 @@
           <JobSearchForm />
         </div>
         <div class="col-span-5 col-start-7 self-center justify-self-center">
-          <HeroImages :activeIndex="activeIdx" />
+          <HeroImages :active-index="activeIdx" />
         </div>
       </div>
     </section>
@@ -41,13 +41,13 @@
 </template>
 
 <script>
-import Headline from '@/components/job-search/Headline.vue';
+import Headline from '@/components/job-search/TheHeadline.vue';
 import JobSearchForm from '@/components/job-search/JobSearchForm.vue';
 import HeroImages from '@/components/job-search/HeroImages.vue';
 import SpotLight from '@/components/job-search/SpotLight.vue';
 
 export default {
-  name: 'Hero',
+  name: 'TheHero',
   components: { Headline, JobSearchForm, HeroImages, SpotLight },
   data() {
     return {

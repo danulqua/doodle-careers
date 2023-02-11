@@ -9,9 +9,9 @@
             class="flex min-h-[32px] w-1/2 items-baseline space-x-2"
           >
             <input
-              type="checkbox"
               :id="organization"
               v-model="selectedOrganizations"
+              type="checkbox"
               :value="organization"
               class="cursor-pointer"
               @change="selectOrganization"

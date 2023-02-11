@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/vue';
 import { createTestingPinia } from '@pinia/testing';
 
-import Subnav from '@/components/navigation/Subnav.vue';
+import SubNav from '@/components/navigation/SubNav.vue';
 import { useJobsStore } from '@/stores/jobs';
 
 describe('Subnav', () => {
@@ -13,7 +13,7 @@ describe('Subnav', () => {
       name: routeName,
     };
 
-    render(Subnav, {
+    render(SubNav, {
       global: {
         plugins: [pinia],
         mocks: { $route },

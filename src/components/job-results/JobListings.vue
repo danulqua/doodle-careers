@@ -41,12 +41,6 @@ import { useJobsStore, FETCH_JOBS, FILTERED_JOBS } from '@/stores/jobs';
 export default {
   name: 'JobListings',
   components: { JobListing },
-  mounted() {
-    this.FETCH_JOBS();
-  },
-  methods: {
-    ...mapActions(useJobsStore, [FETCH_JOBS]),
-  },
   computed: {
     currentPage() {
       return Number.parseInt(this.$route.query.page) || 1;
@@ -70,6 +64,12 @@ export default {
         return this.FILTERED_JOBS.slice(firstIdx, secondIdx);
       },
     }),
+  },
+  mounted() {
+    this.FETCH_JOBS();
+  },
+  methods: {
+    ...mapActions(useJobsStore, [FETCH_JOBS]),
   },
 };
 </script>

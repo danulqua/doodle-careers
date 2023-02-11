@@ -31,14 +31,14 @@ export default {
       isOpen: false,
     };
   },
-  methods: {
-    toggle() {
-      this.isOpen = !this.isOpen;
-    },
-  },
   computed: {
     arrowIcon() {
       return this.isOpen ? ['fas', 'angle-up'] : ['fas', 'angle-down'];
+    },
+  },
+  methods: {
+    toggle() {
+      this.isOpen = !this.isOpen;
     },
   },
 };
