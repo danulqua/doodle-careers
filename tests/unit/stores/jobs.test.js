@@ -19,6 +19,11 @@ describe('state', () => {
     const store = useJobsStore();
     expect(store.selectedOrganizations).toEqual([]);
   });
+
+  it('stores selected types', () => {
+    const store = useJobsStore();
+    expect(store.selectedTypes).toEqual([]);
+  });
 });
 
 describe('actions', () => {
@@ -44,6 +49,14 @@ describe('actions', () => {
       expect(store.selectedOrganizations).toEqual(['Org1', 'Org2']);
     });
   });
+
+  describe('UPDATE_SELECTED_JOB_TYPES', () => {
+    it('updates selected job types with a new set of job types chosen by user', () => {
+      const store = useJobsStore();
+      store.UPDATE_SELECTED_JOB_TYPES(['Full-time', 'Part-time']);
+      expect(store.selectedTypes).toEqual(['Full-time', 'Part-time']);
+    });
+  });
 });
 
 describe('getters', () => {
@@ -62,6 +75,20 @@ describe('getters', () => {
 
       const result = store.UNIQUE_ORGANIZATIONS;
       expect(result).toEqual(new Set(['Doodle', 'Megasoft']));
+    });
+  });
+
+  describe('UNIQUE_JOB_TYPES', () => {
+    it('returns unique set of job types', () => {
+      const store = useJobsStore();
+      store.jobs = [
+        { jobType: 'Full-time' },
+        { jobType: 'Part-time' },
+        { jobType: 'Full-time' },
+      ];
+
+      const result = store.UNIQUE_JOB_TYPES;
+      expect(result).toEqual(new Set(['Full-time', 'Part-time']));
     });
   });
 
