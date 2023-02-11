@@ -41,28 +41,24 @@
   </form>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
 import ActionButton from '@/components/common/ActionButton.vue';
 import TextInput from '@/components/common/TextInput.vue';
 
-export default {
-  name: 'JobSearchForm',
-  components: { ActionButton, TextInput },
-  data() {
-    return {
-      role: '',
-      location: '',
-    };
-  },
-  methods: {
-    handleFormSubmit() {
-      this.$router.push({
-        name: 'JobsResults',
-        query: { role: this.role, location: this.location },
-      });
-    },
-  },
-};
+const role = ref('');
+const location = ref('');
+
+const router = useRouter();
+
+function handleFormSubmit() {
+  router.push({
+    name: 'JobsResults',
+    query: { role: role.value, location: location.value },
+  });
+}
 </script>
 
 <style>
