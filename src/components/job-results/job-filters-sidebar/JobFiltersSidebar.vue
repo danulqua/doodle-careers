@@ -9,22 +9,29 @@
       </div>
     </section>
 
-    <JobFiltersSidebarJobTypes />
-    <JobFiltersSidebarOrganizations />
+    <JobFiltersSidebarCheckboxGroup
+      title="Job types"
+      :unique-values="UNIQUE_JOB_TYPES"
+      :action="jobsStore.UPDATE_SELECTED_JOB_TYPES"
+    />
+
+    <JobFiltersSidebarCheckboxGroup
+      title="Organizations"
+      :unique-values="UNIQUE_ORGANIZATIONS"
+      :action="jobsStore.UPDATE_SELECTED_ORGANIZATIONS"
+    />
   </div>
 </template>
 
-<script>
-import ActionButton from '@/components/common/ActionButton.vue';
-import JobFiltersSidebarOrganizations from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarOrganizations.vue';
-import JobFiltersSidebarJobTypes from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarJobTypes.vue';
+<script setup>
+import { computed } from 'vue';
 
-export default {
-  name: 'JobFiltersSidebar',
-  components: {
-    ActionButton,
-    JobFiltersSidebarOrganizations,
-    JobFiltersSidebarJobTypes,
-  },
-};
+import ActionButton from '@/components/common/ActionButton.vue';
+import JobFiltersSidebarCheckboxGroup from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarCheckboxGroup.vue';
+
+import { useJobsStore } from '@/stores/jobs';
+
+const jobsStore = useJobsStore();
+const UNIQUE_JOB_TYPES = computed(() => jobsStore.UNIQUE_JOB_TYPES);
+const UNIQUE_ORGANIZATIONS = computed(() => jobsStore.UNIQUE_ORGANIZATIONS);
 </script>
