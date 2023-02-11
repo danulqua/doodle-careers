@@ -6,9 +6,19 @@ import { useRoute } from 'vue-router';
 import JobListings from '@/components/job-results/JobListings.vue';
 import { useJobsStore } from '@/stores/jobs';
 
+import usePreviousAndNextPages from '@/composables/usePreviousAndNextPages';
+
 vi.mock('vue-router');
+vi.mock('@/composables/usePreviousAndNextPages');
 
 describe('JobListings', () => {
+  function mockPreviousAndNextPages(pages = {}) {
+    usePreviousAndNextPages.mockReturnValue({
+      previousPage: pages.previousPage,
+      nextPage: pages.nextPage,
+    });
+  }
+
   function renderJobListings() {
     const pinia = createTestingPinia();
     const jobsStore = useJobsStore();
@@ -28,6 +38,7 @@ describe('JobListings', () => {
 
   it('fetches jobs', () => {
     useRoute.mockReturnValue({ query: {} });
+    mockPreviousAndNextPages();
 
     const { jobsStore } = renderJobListings();
     expect(jobsStore.FETCH_JOBS).toHaveBeenCalled();
@@ -35,6 +46,7 @@ describe('JobListings', () => {
 
   it('displays a maximum of 10 jobs', async () => {
     useRoute.mockReturnValue({ query: { page: '1' } });
+    mockPreviousAndNextPages();
 
     const { jobsStore } = renderJobListings();
     jobsStore.FILTERED_JOBS = Array(15).fill({});
@@ -64,6 +76,7 @@ describe('JobListings', () => {
   describe('when user is on first page', () => {
     it('does not show link to previous page', async () => {
       useRoute.mockReturnValue({ query: { page: '1' } });
+      mockPreviousAndNextPages({ nextPage: 2 });
 
       const { jobsStore } = renderJobListings();
       jobsStore.FILTERED_JOBS = Array(15).fill({});
@@ -77,6 +90,7 @@ describe('JobListings', () => {
 
     it('shows link to next page', async () => {
       useRoute.mockReturnValue({ query: { page: '1' } });
+      mockPreviousAndNextPages({ nextPage: 2 });
 
       const { jobsStore } = renderJobListings();
       jobsStore.FILTERED_JOBS = Array(15).fill({});
@@ -92,6 +106,7 @@ describe('JobListings', () => {
   describe('when user is on last page', () => {
     it('does not show link to next page', async () => {
       useRoute.mockReturnValue({ query: { page: '2' } });
+      mockPreviousAndNextPages({ previousPage: 1 });
 
       const { jobsStore } = renderJobListings();
       jobsStore.FILTERED_JOBS = Array(15).fill({});
@@ -105,6 +120,7 @@ describe('JobListings', () => {
 
     it('shows link to previous page', async () => {
       useRoute.mockReturnValue({ query: { page: '2' } });
+      mockPreviousAndNextPages({ previousPage: 1 });
 
       const { jobsStore } = renderJobListings();
       jobsStore.FILTERED_JOBS = Array(15).fill({});
