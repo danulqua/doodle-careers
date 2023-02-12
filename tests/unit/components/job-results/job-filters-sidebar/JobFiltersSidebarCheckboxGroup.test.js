@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/vue';
 import userEvent from '@testing-library/user-event';
-import { createTestingPinia } from '@pinia/testing';
 import { useRouter } from 'vue-router';
 
 import JobFiltersSidebarCheckboxGroup from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarCheckboxGroup.vue';
@@ -18,14 +17,11 @@ describe('JobFiltersSidebarCheckboxGroup', () => {
   }
 
   function renderJobFiltersSidebarCheckboxGroup(props) {
-    const pinia = createTestingPinia();
-
     const router = { push: vi.fn() };
     useRouter.mockReturnValue(router);
 
     render(JobFiltersSidebarCheckboxGroup, {
       global: {
-        plugins: [pinia],
         stubs: {
           FaIcon: true,
         },
