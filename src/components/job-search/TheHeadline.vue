@@ -31,39 +31,31 @@
   </section>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+
 import rearrangeListItems from '@/utils/rearrangeListItems';
 
-export default {
-  name: 'TheHeadline',
-  emits: ['change'],
-  data() {
-    return {
-      actions: ['Build', 'Create', 'Design', 'Code'],
-      activeIdx: 0,
-      interval: null,
-      scroll: false,
-    };
-  },
-  created() {
-    this.startChangingActions();
-  },
-  beforeUnmount() {
-    clearInterval(this.interval);
-  },
-  methods: {
-    startChangingActions() {
-      this.interval = setInterval(() => {
-        this.scroll = true;
-      }, 4000);
-    },
-    rearrangeItems() {
-      this.actions = rearrangeListItems(this.actions);
-      this.activeIdx = (this.activeIdx + 1) % this.actions.length;
-      this.scroll = false;
-      this.$emit('change', this.activeIdx);
-    },
-  },
+const actions = ref(['Build', 'Create', 'Design', 'Code']);
+const activeIdx = ref(0);
+const interval = ref<ReturnType<typeof setInterval>>();
+const scroll = ref(false);
+
+const startChangingActions = () => {
+  interval.value = setInterval(() => {
+    scroll.value = true;
+  }, 4000);
+};
+
+onMounted(startChangingActions);
+onBeforeUnmount(() => clearInterval(interval.value!));
+
+const emit = defineEmits<{ (event: 'change', index: number): number }>();
+const rearrangeItems = () => {
+  actions.value = rearrangeListItems(actions.value);
+  activeIdx.value = (activeIdx.value + 1) % actions.value.length;
+  scroll.value = false;
+  emit('change', activeIdx.value);
 };
 </script>
 
