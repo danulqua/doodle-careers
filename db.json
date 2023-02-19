@@ -2511,5 +2511,27 @@
       "title": "Executive Leadership",
       "description": "Be a leader for everyone. Leadership builds character."
     }
+  ],
+  "degrees": [
+    {
+      "id": 1,
+      "degree": "Associate"
+    },
+    {
+      "id": 2,
+      "degree": "Bachelor's"
+    },
+    {
+      "id": 3,
+      "degree": "Master's"
+    },
+    {
+      "id": 4,
+      "degree": "Ph.D."
+    },
+    {
+      "id": 5,
+      "degree": "Pursuing Degree"
+    }
   ]
 }
