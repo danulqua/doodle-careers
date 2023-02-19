@@ -24,7 +24,7 @@ describe('getJobs', () => {
     expect(axios.get).toHaveBeenCalledWith(`${baseUrl}/jobs`);
   });
 
-  it('extracts jobs from responce', async () => {
+  it('extracts jobs from response', async () => {
     const jobs = await getJobs();
     expect(jobs).toEqual([
       {
