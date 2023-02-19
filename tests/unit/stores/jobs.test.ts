@@ -1,9 +1,12 @@
 import { createPinia, setActivePinia } from 'pinia';
 import axios from 'axios';
+import type { Mock } from 'vitest';
 
 import { useJobsStore } from '@/stores/jobs';
+import type { Job } from '@/api/types';
 
 vi.mock('axios');
+const axiosGetMock = axios.get as Mock;
 
 describe('state', () => {
   beforeEach(() => {
@@ -33,7 +36,7 @@ describe('actions', () => {
 
   describe('FETCH_JOBS', () => {
     it('makes API request and stores received jobs', async () => {
-      axios.get.mockResolvedValue({ data: ['job 1', 'job 2'] });
+      axiosGetMock.mockResolvedValue({ data: ['job 1', 'job 2'] });
 
       const store = useJobsStore();
       await store.FETCH_JOBS();
@@ -64,13 +67,29 @@ describe('getters', () => {
     setActivePinia(createPinia());
   });
 
+  function createJob(job: Partial<Job> = {}): Job {
+    return {
+      id: 1,
+      title: 'Angular Developer',
+      organization: 'Vue and Me',
+      degree: "Master's",
+      jobType: 'Intern',
+      locations: ['Lisbon'],
+      minimumQualifications: ['Mesh granular deliverables'],
+      preferredQualifications: ['Mesh wireless metrics'],
+      description: ['Away someone forget effect wait land.'],
+      dateAdded: '2021-07-04',
+      ...job,
+    };
+  }
+
   describe('UNIQUE_ORGANIZATIONS', () => {
     it('returns unique set of organizations', () => {
       const store = useJobsStore();
       store.jobs = [
-        { organization: 'Doodle' },
-        { organization: 'Megasoft' },
-        { organization: 'Doodle' },
+        createJob({ organization: 'Doodle' }),
+        createJob({ organization: 'Megasoft' }),
+        createJob({ organization: 'Doodle' }),
       ];
 
       const result = store.UNIQUE_ORGANIZATIONS;
@@ -82,9 +101,9 @@ describe('getters', () => {
     it('returns unique set of job types', () => {
       const store = useJobsStore();
       store.jobs = [
-        { jobType: 'Full-time' },
-        { jobType: 'Part-time' },
-        { jobType: 'Full-time' },
+        createJob({ jobType: 'Full-time' }),
+        createJob({ jobType: 'Part-time' }),
+        createJob({ jobType: 'Full-time' }),
       ];
 
       const result = store.UNIQUE_JOB_TYPES;
@@ -97,15 +116,17 @@ describe('getters', () => {
       it('includes job', () => {
         const store = useJobsStore();
         store.jobs = [
-          { organization: 'Doodle' },
-          { organization: 'Megasoft' },
-          { organization: 'Woohoo' },
+          createJob({ organization: 'Doodle' }),
+          createJob({ organization: 'Megasoft' }),
+          createJob({ organization: 'Woohoo' }),
         ];
 
         store.selectedOrganizations = [];
-        const result = store.SHOULD_INCLUDE_JOB_BY_ORGANIZATION({
-          organization: 'Doodle',
-        });
+        const result = store.SHOULD_INCLUDE_JOB_BY_ORGANIZATION(
+          createJob({
+            organization: 'Doodle',
+          })
+        );
         expect(result).toBe(true);
       });
     });
@@ -114,15 +135,17 @@ describe('getters', () => {
       it('returns the associated job', () => {
         const store = useJobsStore();
         store.jobs = [
-          { organization: 'Doodle' },
-          { organization: 'Megasoft' },
-          { organization: 'Woohoo' },
+          createJob({ organization: 'Doodle' }),
+          createJob({ organization: 'Megasoft' }),
+          createJob({ organization: 'Woohoo' }),
         ];
 
         store.selectedOrganizations = ['Doodle', 'Woohoo'];
-        const result = store.SHOULD_INCLUDE_JOB_BY_ORGANIZATION({
-          organization: 'Doodle',
-        });
+        const result = store.SHOULD_INCLUDE_JOB_BY_ORGANIZATION(
+          createJob({
+            organization: 'Doodle',
+          })
+        );
         expect(result).toBe(true);
       });
     });
@@ -130,15 +153,17 @@ describe('getters', () => {
     it('does not return the job that is not associated', () => {
       const store = useJobsStore();
       store.jobs = [
-        { organization: 'Doodle' },
-        { organization: 'Megasoft' },
-        { organization: 'Woohoo' },
+        createJob({ organization: 'Doodle' }),
+        createJob({ organization: 'Megasoft' }),
+        createJob({ organization: 'Woohoo' }),
       ];
 
       store.selectedOrganizations = ['Doodle', 'Woohoo'];
-      const result = store.SHOULD_INCLUDE_JOB_BY_ORGANIZATION({
-        organization: 'Megasoft',
-      });
+      const result = store.SHOULD_INCLUDE_JOB_BY_ORGANIZATION(
+        createJob({
+          organization: 'Megasoft',
+        })
+      );
       expect(result).toBe(false);
     });
   });
@@ -148,15 +173,17 @@ describe('getters', () => {
       it('includes job', () => {
         const store = useJobsStore();
         store.jobs = [
-          { jobType: 'Full-time' },
-          { jobType: 'Part-time' },
-          { jobType: 'Temporary' },
+          createJob({ jobType: 'Full-time' }),
+          createJob({ jobType: 'Part-time' }),
+          createJob({ jobType: 'Temporary' }),
         ];
 
         store.selectedJobTypes = [];
-        const result = store.SHOULD_INCLUDE_JOB_BY_JOB_TYPE({
-          jobType: 'Full-time',
-        });
+        const result = store.SHOULD_INCLUDE_JOB_BY_JOB_TYPE(
+          createJob({
+            jobType: 'Full-time',
+          })
+        );
         expect(result).toBe(true);
       });
     });
@@ -165,15 +192,17 @@ describe('getters', () => {
       it('returns the associated job', () => {
         const store = useJobsStore();
         store.jobs = [
-          { jobType: 'Full-time' },
-          { jobType: 'Part-time' },
-          { jobType: 'Temporary' },
+          createJob({ jobType: 'Full-time' }),
+          createJob({ jobType: 'Part-time' }),
+          createJob({ jobType: 'Temporary' }),
         ];
 
         store.selectedJobTypes = ['Full-time', 'Temporary'];
-        const result = store.SHOULD_INCLUDE_JOB_BY_JOB_TYPE({
-          jobType: 'Full-time',
-        });
+        const result = store.SHOULD_INCLUDE_JOB_BY_JOB_TYPE(
+          createJob({
+            jobType: 'Full-time',
+          })
+        );
         expect(result).toBe(true);
       });
     });
@@ -181,15 +210,17 @@ describe('getters', () => {
     it('does not return the job that is not associated', () => {
       const store = useJobsStore();
       store.jobs = [
-        { jobType: 'Full-time' },
-        { jobType: 'Part-time' },
-        { jobType: 'Temporary' },
+        createJob({ jobType: 'Full-time' }),
+        createJob({ jobType: 'Part-time' }),
+        createJob({ jobType: 'Temporary' }),
       ];
 
       store.selectedJobTypes = ['Full-time', 'Temporary'];
-      const result = store.SHOULD_INCLUDE_JOB_BY_JOB_TYPE({
-        jobType: 'Part-time',
-      });
+      const result = store.SHOULD_INCLUDE_JOB_BY_JOB_TYPE(
+        createJob({
+          jobType: 'Part-time',
+        })
+      );
       expect(result).toBe(false);
     });
   });
