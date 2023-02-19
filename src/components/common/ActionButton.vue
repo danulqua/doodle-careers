@@ -2,8 +2,10 @@
   <button :class="btnStyles">{{ text }}</button>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
+
+type ButtonType = 'primary' | 'secondary';
 
 const props = defineProps({
   text: {
@@ -13,7 +15,7 @@ const props = defineProps({
   type: {
     type: String,
     default: 'primary',
-    validator(value) {
+    validator(value: ButtonType) {
       return ['primary', 'secondary'].includes(value);
     },
   },
