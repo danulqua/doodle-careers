@@ -1,13 +1,15 @@
+import type { Mock } from 'vitest';
 import axios from 'axios';
 
 import getJobs from '@/api/getJobs';
 
 vi.mock('axios');
+const axiosGetMock = axios.get as Mock;
 const baseUrl = import.meta.env.VITE_APP_API_URL;
 
 describe('getJobs', () => {
   beforeEach(() => {
-    axios.get.mockResolvedValue({
+    axiosGetMock.mockResolvedValue({
       data: [
         {
           id: 1,
