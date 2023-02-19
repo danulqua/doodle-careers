@@ -31,50 +31,39 @@
   </header>
 </template>
 
-<script>
-import { mapStores } from 'pinia';
-
+<script setup lang="ts">
 import { useUserStore } from '@/stores/user';
 
 import ActionButton from '@/components/common/ActionButton.vue';
 import ProfileImage from '@/components/navigation/ProfileImage.vue';
 import SubNav from '@/components/navigation/SubNav.vue';
 
-export default {
-  name: 'MainNav',
-  components: { ActionButton, ProfileImage, SubNav },
-  data() {
-    return {
-      links: [
-        {
-          text: 'Teams',
-          to: '/teams',
-        },
-        {
-          text: 'Locations',
-          to: '/',
-        },
-        {
-          text: 'Life at danulqua Corp',
-          to: '/',
-        },
-        {
-          text: 'How we hire',
-          to: '/',
-        },
-        {
-          text: 'Students',
-          to: '/',
-        },
-        {
-          text: 'Jobs',
-          to: '/jobs/results',
-        },
-      ],
-    };
+const links = [
+  {
+    text: 'Teams',
+    to: '/teams',
   },
-  computed: {
-    ...mapStores(useUserStore),
+  {
+    text: 'Locations',
+    to: '/',
   },
-};
+  {
+    text: 'Life at danulqua Corp',
+    to: '/',
+  },
+  {
+    text: 'How we hire',
+    to: '/',
+  },
+  {
+    text: 'Students',
+    to: '/',
+  },
+  {
+    text: 'Jobs',
+    to: '/jobs/results',
+  },
+];
+
+const userStore = useUserStore();
 </script>
