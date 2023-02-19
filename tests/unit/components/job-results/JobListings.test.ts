@@ -8,6 +8,7 @@ import JobListings from '@/components/job-results/JobListings.vue';
 import { useJobsStore } from '@/stores/jobs';
 
 import usePreviousAndNextPages from '@/composables/usePreviousAndNextPages';
+import { useDegreesStore } from '@/stores/degrees';
 
 vi.mock('vue-router');
 const useRouteMock = useRoute as Mock;
@@ -30,6 +31,7 @@ describe('JobListings', () => {
   function renderJobListings() {
     const pinia = createTestingPinia();
     const jobsStore = useJobsStore();
+    const degreesStore = useDegreesStore();
     // @ts-expect-error: getter is readonly
     jobsStore.FILTERED_JOBS = Array(15).fill({});
 
@@ -42,7 +44,7 @@ describe('JobListings', () => {
       },
     });
 
-    return { jobsStore };
+    return { jobsStore, degreesStore };
   }
 
   it('fetches jobs', () => {
@@ -51,6 +53,14 @@ describe('JobListings', () => {
 
     const { jobsStore } = renderJobListings();
     expect(jobsStore.FETCH_JOBS).toHaveBeenCalled();
+  });
+
+  it('fetches degrees', () => {
+    useRouteMock.mockReturnValue({ query: {} });
+    mockPreviousAndNextPages();
+
+    const { degreesStore } = renderJobListings();
+    expect(degreesStore.FETCH_DEGREES).toHaveBeenCalled();
   });
 
   it('displays a maximum of 10 jobs', async () => {

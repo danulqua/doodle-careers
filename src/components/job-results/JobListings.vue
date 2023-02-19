@@ -40,9 +40,12 @@ import JobListing from '@/components/job-results/JobListing.vue';
 import { useJobsStore } from '@/stores/jobs';
 
 import usePreviousAndNextPages from '@/composables/usePreviousAndNextPages';
+import { useDegreesStore } from '@/stores/degrees';
 
 const jobsStore = useJobsStore();
+const degreesStore = useDegreesStore();
 onMounted(jobsStore.FETCH_JOBS);
+onMounted(degreesStore.FETCH_DEGREES);
 
 const FILTERED_JOBS = computed(() => jobsStore.FILTERED_JOBS);
 

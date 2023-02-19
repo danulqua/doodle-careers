@@ -10,6 +10,12 @@
     </section>
 
     <JobFiltersSidebarCheckboxGroup
+      title="Degrees"
+      :unique-values="UNIQUE_DEGREES"
+      :action="jobsStore.UPDATE_SELECTED_DEGREES"
+    />
+
+    <JobFiltersSidebarCheckboxGroup
       title="Job types"
       :unique-values="UNIQUE_JOB_TYPES"
       :action="jobsStore.UPDATE_SELECTED_JOB_TYPES"
@@ -30,8 +36,12 @@ import ActionButton from '@/components/common/ActionButton.vue';
 import JobFiltersSidebarCheckboxGroup from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarCheckboxGroup.vue';
 
 import { useJobsStore } from '@/stores/jobs';
+import { useDegreesStore } from '@/stores/degrees';
 
 const jobsStore = useJobsStore();
 const UNIQUE_JOB_TYPES = computed(() => jobsStore.UNIQUE_JOB_TYPES);
 const UNIQUE_ORGANIZATIONS = computed(() => jobsStore.UNIQUE_ORGANIZATIONS);
+
+const degreesStore = useDegreesStore();
+const UNIQUE_DEGREES = computed(() => degreesStore.UNIQUE_DEGREES);
 </script>
