@@ -13,11 +13,6 @@
   </HeaderContainer>
 </template>
 
-<script>
+<script setup lang="ts">
 import HeaderContainer from '@/components/common/HeaderContainer.vue';
-
-export default {
-  name: 'TeamsPage',
-  components: { HeaderContainer },
-};
 </script>

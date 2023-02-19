@@ -2,12 +2,6 @@
   <TheHero />
 </template>
 
-<script>
+<script setup lang="ts">
 import TheHero from '@/components/job-search/TheHero.vue';
-
-export default {
-  name: 'HomePage',
-  components: { TheHero },
-};
 </script>
-kubernetes
