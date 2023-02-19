@@ -3,7 +3,7 @@
     <section class="pt-10 pb-20">
       <div class="grid grid-cols-12">
         <div class="col-span-5 col-start-2">
-          <Headline @change="handleActionChange" />
+          <TheHeadline @change="handleActionChange" />
           <JobSearchForm />
         </div>
         <div class="col-span-5 col-start-7 self-center justify-self-center">
@@ -40,24 +40,15 @@
   </main>
 </template>
 
-<script>
-import Headline from '@/components/job-search/TheHeadline.vue';
+<script setup lang="ts">
+import { ref } from 'vue';
+
 import JobSearchForm from '@/components/job-search/JobSearchForm.vue';
+import TheHeadline from '@/components/job-search/TheHeadline.vue';
 import HeroImages from '@/components/job-search/HeroImages.vue';
 import SpotLight from '@/components/job-search/SpotLight.vue';
 
-export default {
-  name: 'TheHero',
-  components: { Headline, JobSearchForm, HeroImages, SpotLight },
-  data() {
-    return {
-      activeIdx: 0,
-    };
-  },
-  methods: {
-    handleActionChange(actionIdx) {
-      this.activeIdx = actionIdx;
-    },
-  },
-};
+const activeIdx = ref(0);
+
+const handleActionChange = (actionIdx: number) => (activeIdx.value = actionIdx);
 </script>

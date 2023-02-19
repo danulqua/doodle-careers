@@ -11,27 +11,20 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import buildImg from '@/assets/images/hero-build.png';
 import createImg from '@/assets/images/hero-create.png';
 import designImg from '@/assets/images/hero-design.png';
 import codeImg from '@/assets/images/hero-code.png';
 
-export default {
-  name: 'HeroImages',
-  props: {
-    activeIndex: {
-      type: Number,
-      required: true,
-    },
+defineProps({
+  activeIndex: {
+    type: Number,
+    required: true,
   },
-  data() {
-    return {
-      images: [buildImg, createImg, designImg, codeImg],
-      interval: null,
-    };
-  },
-};
+});
+
+const images = [buildImg, createImg, designImg, codeImg];
 </script>
 
 <style>
