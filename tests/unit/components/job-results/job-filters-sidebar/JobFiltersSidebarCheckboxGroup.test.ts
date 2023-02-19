@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import { render, screen } from '@testing-library/vue';
 import userEvent from '@testing-library/user-event';
 import { useRouter } from 'vue-router';
@@ -5,9 +6,18 @@ import { useRouter } from 'vue-router';
 import JobFiltersSidebarCheckboxGroup from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarCheckboxGroup.vue';
 
 vi.mock('vue-router');
+const useRouterMock = useRouter as Mock;
 
 describe('JobFiltersSidebarCheckboxGroup', () => {
-  function createProps(props = {}) {
+  interface JobFiltersSidebarCheckboxGroupProps {
+    title: string;
+    uniqueValues: Set<string>;
+    action: Mock;
+  }
+
+  function createProps(
+    props: Partial<JobFiltersSidebarCheckboxGroupProps> = {}
+  ) {
     return {
       title: 'Sample title',
       uniqueValues: new Set(['Value 1', 'Value 2']),
@@ -16,9 +26,11 @@ describe('JobFiltersSidebarCheckboxGroup', () => {
     };
   }
 
-  function renderJobFiltersSidebarCheckboxGroup(props) {
+  function renderJobFiltersSidebarCheckboxGroup(
+    props: Partial<JobFiltersSidebarCheckboxGroupProps>
+  ) {
     const router = { push: vi.fn() };
-    useRouter.mockReturnValue(router);
+    useRouterMock.mockReturnValue(router);
 
     render(JobFiltersSidebarCheckboxGroup, {
       global: {
