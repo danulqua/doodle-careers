@@ -1,23 +1,26 @@
 import { defineStore } from 'pinia';
 
 import getJobs from '@/api/getJobs';
-import type { Job } from '@/api/types';
+import type { Degree, Job } from '@/api/types';
 
 export const FETCH_JOBS = 'FETCH_JOBS';
 export const UNIQUE_ORGANIZATIONS = 'UNIQUE_ORGANIZATIONS';
 export const UNIQUE_JOB_TYPES = 'UNIQUE_JOB_TYPES';
 export const UPDATE_SELECTED_ORGANIZATIONS = 'UPDATE_SELECTED_ORGANIZATIONS';
 export const UPDATE_SELECTED_JOB_TYPES = 'UPDATE_SELECTED_JOB_TYPES';
+export const UPDATE_SELECTED_DEGREES = 'UPDATE_SELECTED_DEGREES';
 export const FILTERED_JOBS = 'FILTERED_JOBS';
 
 export const SHOULD_INCLUDE_JOB_BY_ORGANIZATION =
   'SHOULD_INCLUDE_JOB_BY_ORGANIZATION';
 export const SHOULD_INCLUDE_JOB_BY_JOB_TYPE = 'SHOULD_INCLUDE_JOB_BY_JOB_TYPE';
+export const SHOULD_INCLUDE_JOB_BY_DEGREE = 'SHOULD_INCLUDE_JOB_BY_DEGREE';
 
 export interface JobsState {
   jobs: Job[];
   selectedOrganizations: string[];
   selectedJobTypes: string[];
+  selectedDegrees: string[];
 }
 
 export const useJobsStore = defineStore('jobs', {
@@ -25,6 +28,7 @@ export const useJobsStore = defineStore('jobs', {
     jobs: [],
     selectedOrganizations: [],
     selectedJobTypes: [],
+    selectedDegrees: [],
   }),
   actions: {
     async [FETCH_JOBS]() {
@@ -35,6 +39,9 @@ export const useJobsStore = defineStore('jobs', {
     },
     [UPDATE_SELECTED_JOB_TYPES](types: string[]) {
       this.selectedJobTypes = types;
+    },
+    [UPDATE_SELECTED_DEGREES](degrees: string[]) {
+      this.selectedDegrees = degrees;
     },
   },
   getters: {
@@ -58,10 +65,16 @@ export const useJobsStore = defineStore('jobs', {
       if (noSelectedJobTypes) return true;
       return state.selectedJobTypes.includes(job.jobType);
     },
+    [SHOULD_INCLUDE_JOB_BY_DEGREE]: (state) => (job: Degree) => {
+      const noSelectedJobDegrees = !state.selectedDegrees.length;
+      if (noSelectedJobDegrees) return true;
+      return state.selectedDegrees.includes(job.degree);
+    },
     [FILTERED_JOBS](state): Job[] {
       return state.jobs
         .filter(this.SHOULD_INCLUDE_JOB_BY_ORGANIZATION)
-        .filter(this.SHOULD_INCLUDE_JOB_BY_JOB_TYPE);
+        .filter(this.SHOULD_INCLUDE_JOB_BY_JOB_TYPE)
+        .filter(this.SHOULD_INCLUDE_JOB_BY_DEGREE);
     },
   },
 });

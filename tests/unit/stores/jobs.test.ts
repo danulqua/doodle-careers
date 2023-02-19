@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import { useJobsStore } from '@/stores/jobs';
 import { createJob } from 'tests/utils/createJob';
+import { createDegree } from 'tests/utils/createDegree';
+import { useDegreesStore } from '@/stores/degrees';
 
 vi.mock('axios');
 const axiosGetMock = axios.get as Mock;
@@ -26,6 +28,11 @@ describe('state', () => {
   it('stores selected types', () => {
     const store = useJobsStore();
     expect(store.selectedJobTypes).toEqual([]);
+  });
+
+  it('stores selected degrees', () => {
+    const store = useJobsStore();
+    expect(store.selectedDegrees).toEqual([]);
   });
 });
 
@@ -58,6 +65,14 @@ describe('actions', () => {
       const store = useJobsStore();
       store.UPDATE_SELECTED_JOB_TYPES(['Full-time', 'Part-time']);
       expect(store.selectedJobTypes).toEqual(['Full-time', 'Part-time']);
+    });
+  });
+
+  describe('UPDATE_SELECTED_DEGREES', () => {
+    it('updates selected job types with a new set of job types chosen by user', () => {
+      const store = useJobsStore();
+      store.UPDATE_SELECTED_DEGREES(['Bachelor', 'Master']);
+      expect(store.selectedDegrees).toEqual(['Bachelor', 'Master']);
     });
   });
 });
@@ -203,6 +218,69 @@ describe('getters', () => {
       const result = store.SHOULD_INCLUDE_JOB_BY_JOB_TYPE(
         createJob({
           jobType: 'Part-time',
+        })
+      );
+      expect(result).toBe(false);
+    });
+  });
+
+  describe('SHOULD_INCLUDE_JOB_BY_DEGREE', () => {
+    describe('when user has not selected any degree', () => {
+      it('includes job', () => {
+        const jobsStore = useJobsStore();
+        const degreesStore = useDegreesStore();
+
+        degreesStore.degrees = [
+          createDegree({ degree: 'Bachelor' }),
+          createDegree({ degree: 'Master' }),
+          createDegree({ degree: 'Professor' }),
+        ];
+
+        jobsStore.selectedDegrees = [];
+        const result = jobsStore.SHOULD_INCLUDE_JOB_BY_DEGREE(
+          createDegree({
+            degree: 'Bachelor',
+          })
+        );
+        expect(result).toBe(true);
+      });
+    });
+
+    describe('when user has selected degree, required for the job', () => {
+      it('returns the associated job', () => {
+        const jobsStore = useJobsStore();
+        const degreesStore = useDegreesStore();
+
+        degreesStore.degrees = [
+          createDegree({ degree: 'Bachelor' }),
+          createDegree({ degree: 'Master' }),
+          createDegree({ degree: 'Professor' }),
+        ];
+
+        jobsStore.selectedDegrees = ['Bachelor', 'Professor'];
+        const result = jobsStore.SHOULD_INCLUDE_JOB_BY_DEGREE(
+          createDegree({
+            degree: 'Bachelor',
+          })
+        );
+        expect(result).toBe(true);
+      });
+    });
+
+    it('does not return the job that is not associated', () => {
+      const jobsStore = useJobsStore();
+      const degreesStore = useDegreesStore();
+
+      degreesStore.degrees = [
+        createDegree({ degree: 'Bachelor' }),
+        createDegree({ degree: 'Master' }),
+        createDegree({ degree: 'Professor' }),
+      ];
+
+      jobsStore.selectedDegrees = ['Bachelor', 'Professor'];
+      const result = jobsStore.SHOULD_INCLUDE_JOB_BY_DEGREE(
+        createDegree({
+          degree: 'Master',
         })
       );
       expect(result).toBe(false);
