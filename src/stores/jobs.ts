@@ -1,86 +1,89 @@
+import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 
 import getJobs from '@/api/getJobs';
 import type { Degree, Job } from '@/api/types';
 
-export const FETCH_JOBS = 'FETCH_JOBS';
-export const UNIQUE_ORGANIZATIONS = 'UNIQUE_ORGANIZATIONS';
-export const UNIQUE_JOB_TYPES = 'UNIQUE_JOB_TYPES';
-export const UPDATE_SELECTED_ORGANIZATIONS = 'UPDATE_SELECTED_ORGANIZATIONS';
-export const UPDATE_SELECTED_JOB_TYPES = 'UPDATE_SELECTED_JOB_TYPES';
-export const UPDATE_SELECTED_DEGREES = 'UPDATE_SELECTED_DEGREES';
-export const CLEAR_JOB_FILTERS_SELECTION = 'CLEAR_JOB_FILTERS_SELECTION';
-export const FILTERED_JOBS = 'FILTERED_JOBS';
+export const useJobsStore = defineStore('jobs', () => {
+  const jobs = ref<Job[]>([]);
+  const selectedOrganizations = ref<string[]>([]);
+  const selectedJobTypes = ref<string[]>([]);
+  const selectedDegrees = ref<string[]>([]);
 
-export const SHOULD_INCLUDE_JOB_BY_ORGANIZATION =
-  'SHOULD_INCLUDE_JOB_BY_ORGANIZATION';
-export const SHOULD_INCLUDE_JOB_BY_JOB_TYPE = 'SHOULD_INCLUDE_JOB_BY_JOB_TYPE';
-export const SHOULD_INCLUDE_JOB_BY_DEGREE = 'SHOULD_INCLUDE_JOB_BY_DEGREE';
+  const FETCH_JOBS = async () => {
+    jobs.value = await getJobs();
+  };
 
-export interface JobsState {
-  jobs: Job[];
-  selectedOrganizations: string[];
-  selectedJobTypes: string[];
-  selectedDegrees: string[];
-}
+  const UPDATE_SELECTED_ORGANIZATIONS = (organizations: string[]) => {
+    selectedOrganizations.value = organizations;
+  };
 
-export const useJobsStore = defineStore('jobs', {
-  state: (): JobsState => ({
-    jobs: [],
-    selectedOrganizations: [],
-    selectedJobTypes: [],
-    selectedDegrees: [],
-  }),
-  actions: {
-    async [FETCH_JOBS]() {
-      this.jobs = await getJobs();
-    },
-    [UPDATE_SELECTED_ORGANIZATIONS](organizations: string[]) {
-      this.selectedOrganizations = organizations;
-    },
-    [UPDATE_SELECTED_JOB_TYPES](types: string[]) {
-      this.selectedJobTypes = types;
-    },
-    [UPDATE_SELECTED_DEGREES](degrees: string[]) {
-      this.selectedDegrees = degrees;
-    },
-    [CLEAR_JOB_FILTERS_SELECTION]() {
-      this.selectedOrganizations = [];
-      this.selectedJobTypes = [];
-      this.selectedDegrees = [];
-    },
-  },
-  getters: {
-    [UNIQUE_ORGANIZATIONS](state) {
-      const uniqueOrganizations = new Set<string>();
-      state.jobs.forEach((job) => uniqueOrganizations.add(job.organization));
-      return uniqueOrganizations;
-    },
-    [UNIQUE_JOB_TYPES](state) {
-      const uniqueJobTypes = new Set<string>();
-      state.jobs.forEach((job) => uniqueJobTypes.add(job.jobType));
-      return uniqueJobTypes;
-    },
-    [SHOULD_INCLUDE_JOB_BY_ORGANIZATION]: (state) => (job: Job) => {
-      const noSelectedOrganizations = !state.selectedOrganizations.length;
-      if (noSelectedOrganizations) return true;
-      return state.selectedOrganizations.includes(job.organization);
-    },
-    [SHOULD_INCLUDE_JOB_BY_JOB_TYPE]: (state) => (job: Job) => {
-      const noSelectedJobTypes = !state.selectedJobTypes.length;
-      if (noSelectedJobTypes) return true;
-      return state.selectedJobTypes.includes(job.jobType);
-    },
-    [SHOULD_INCLUDE_JOB_BY_DEGREE]: (state) => (job: Degree) => {
-      const noSelectedJobDegrees = !state.selectedDegrees.length;
-      if (noSelectedJobDegrees) return true;
-      return state.selectedDegrees.includes(job.degree);
-    },
-    [FILTERED_JOBS](state): Job[] {
-      return state.jobs
-        .filter(this.SHOULD_INCLUDE_JOB_BY_ORGANIZATION)
-        .filter(this.SHOULD_INCLUDE_JOB_BY_JOB_TYPE)
-        .filter(this.SHOULD_INCLUDE_JOB_BY_DEGREE);
-    },
-  },
+  const UPDATE_SELECTED_JOB_TYPES = (jobTypes: string[]) => {
+    selectedJobTypes.value = jobTypes;
+  };
+
+  const UPDATE_SELECTED_DEGREES = (degrees: string[]) => {
+    selectedDegrees.value = degrees;
+  };
+
+  const CLEAR_JOB_FILTERS_SELECTION = () => {
+    selectedOrganizations.value = [];
+    selectedJobTypes.value = [];
+    selectedDegrees.value = [];
+  };
+
+  const UNIQUE_ORGANIZATIONS = computed(() => {
+    const uniqueOrganizations = new Set<string>();
+    jobs.value.forEach((job) => uniqueOrganizations.add(job.organization));
+    return uniqueOrganizations;
+  });
+
+  const UNIQUE_JOB_TYPES = computed(() => {
+    const uniqueJobTypes = new Set<string>();
+    jobs.value.forEach((job) => uniqueJobTypes.add(job.jobType));
+    return uniqueJobTypes;
+  });
+
+  const SHOULD_INCLUDE_JOB_BY_ORGANIZATION = computed(() => (job: Job) => {
+    const noSelectedOrganizations = !selectedOrganizations.value.length;
+    if (noSelectedOrganizations) return true;
+    return selectedOrganizations.value.includes(job.organization);
+  });
+
+  const SHOULD_INCLUDE_JOB_BY_JOB_TYPE = computed(() => (job: Job) => {
+    const noSelectedJobTypes = !selectedJobTypes.value.length;
+    if (noSelectedJobTypes) return true;
+    return selectedJobTypes.value.includes(job.jobType);
+  });
+
+  const SHOULD_INCLUDE_JOB_BY_DEGREE = computed(() => (degree: Degree) => {
+    const noSelectedDegrees = !selectedDegrees.value.length;
+    if (noSelectedDegrees) return true;
+    return selectedDegrees.value.includes(degree.degree);
+  });
+
+  const FILTERED_JOBS = computed(() =>
+    jobs.value
+      .filter(SHOULD_INCLUDE_JOB_BY_ORGANIZATION.value)
+      .filter(SHOULD_INCLUDE_JOB_BY_JOB_TYPE.value)
+      .filter(SHOULD_INCLUDE_JOB_BY_DEGREE.value)
+  );
+
+  return {
+    jobs,
+    selectedOrganizations,
+    selectedJobTypes,
+    selectedDegrees,
+    FETCH_JOBS,
+    UPDATE_SELECTED_ORGANIZATIONS,
+    UPDATE_SELECTED_JOB_TYPES,
+    UPDATE_SELECTED_DEGREES,
+    CLEAR_JOB_FILTERS_SELECTION,
+    UNIQUE_ORGANIZATIONS,
+    UNIQUE_JOB_TYPES,
+    SHOULD_INCLUDE_JOB_BY_ORGANIZATION,
+    SHOULD_INCLUDE_JOB_BY_JOB_TYPE,
+    SHOULD_INCLUDE_JOB_BY_DEGREE,
+    FILTERED_JOBS,
+  };
 });
