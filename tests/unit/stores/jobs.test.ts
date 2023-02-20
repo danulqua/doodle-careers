@@ -34,6 +34,11 @@ describe('state', () => {
     const store = useJobsStore();
     expect(store.selectedDegrees).toEqual([]);
   });
+
+  it('stores search term for skills and qualifications', () => {
+    const store = useJobsStore();
+    expect(store.skillsSearchTerm).toBe('');
+  });
 });
 
 describe('actions', () => {
@@ -73,6 +78,15 @@ describe('actions', () => {
       const store = useJobsStore();
       store.UPDATE_SELECTED_DEGREES(['Bachelor', 'Master']);
       expect(store.selectedDegrees).toEqual(['Bachelor', 'Master']);
+    });
+  });
+
+  describe('UPDATE_SKILLS_SEARCH_TERM', () => {
+    it('receives search term for skills user has entered', () => {
+      const store = useJobsStore();
+      store.skillsSearchTerm = '';
+      store.UPDATE_SKILLS_SEARCH_TERM('Vue');
+      expect(store.skillsSearchTerm).toBe('Vue');
     });
   });
 

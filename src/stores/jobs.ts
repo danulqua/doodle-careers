@@ -9,6 +9,7 @@ export const useJobsStore = defineStore('jobs', () => {
   const selectedOrganizations = ref<string[]>([]);
   const selectedJobTypes = ref<string[]>([]);
   const selectedDegrees = ref<string[]>([]);
+  const skillsSearchTerm = ref('');
 
   const FETCH_JOBS = async () => {
     jobs.value = await getJobs();
@@ -24,6 +25,10 @@ export const useJobsStore = defineStore('jobs', () => {
 
   const UPDATE_SELECTED_DEGREES = (degrees: string[]) => {
     selectedDegrees.value = degrees;
+  };
+
+  const UPDATE_SKILLS_SEARCH_TERM = (term: string) => {
+    skillsSearchTerm.value = term;
   };
 
   const CLEAR_JOB_FILTERS_SELECTION = () => {
@@ -74,10 +79,12 @@ export const useJobsStore = defineStore('jobs', () => {
     selectedOrganizations,
     selectedJobTypes,
     selectedDegrees,
+    skillsSearchTerm,
     FETCH_JOBS,
     UPDATE_SELECTED_ORGANIZATIONS,
     UPDATE_SELECTED_JOB_TYPES,
     UPDATE_SELECTED_DEGREES,
+    UPDATE_SKILLS_SEARCH_TERM,
     CLEAR_JOB_FILTERS_SELECTION,
     UNIQUE_ORGANIZATIONS,
     UNIQUE_JOB_TYPES,
