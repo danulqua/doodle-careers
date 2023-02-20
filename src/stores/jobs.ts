@@ -9,6 +9,7 @@ export const UNIQUE_JOB_TYPES = 'UNIQUE_JOB_TYPES';
 export const UPDATE_SELECTED_ORGANIZATIONS = 'UPDATE_SELECTED_ORGANIZATIONS';
 export const UPDATE_SELECTED_JOB_TYPES = 'UPDATE_SELECTED_JOB_TYPES';
 export const UPDATE_SELECTED_DEGREES = 'UPDATE_SELECTED_DEGREES';
+export const CLEAR_JOB_FILTERS_SELECTION = 'CLEAR_JOB_FILTERS_SELECTION';
 export const FILTERED_JOBS = 'FILTERED_JOBS';
 
 export const SHOULD_INCLUDE_JOB_BY_ORGANIZATION =
@@ -42,6 +43,11 @@ export const useJobsStore = defineStore('jobs', {
     },
     [UPDATE_SELECTED_DEGREES](degrees: string[]) {
       this.selectedDegrees = degrees;
+    },
+    [CLEAR_JOB_FILTERS_SELECTION]() {
+      this.selectedOrganizations = [];
+      this.selectedJobTypes = [];
+      this.selectedDegrees = [];
     },
   },
   getters: {

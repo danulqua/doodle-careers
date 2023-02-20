@@ -75,6 +75,22 @@ describe('actions', () => {
       expect(store.selectedDegrees).toEqual(['Bachelor', 'Master']);
     });
   });
+
+  describe('CLEAR_JOB_FILTERS_SELECTION', () => {
+    it('removes all job filters that user has chosen', () => {
+      const store = useJobsStore();
+
+      store.selectedOrganizations = ['Doodle'];
+      store.selectedJobTypes = ['Random job type'];
+      store.selectedDegrees = ['Bachelor'];
+
+      store.CLEAR_JOB_FILTERS_SELECTION();
+
+      expect(store.selectedOrganizations).toEqual([]);
+      expect(store.selectedJobTypes).toEqual([]);
+      expect(store.selectedDegrees).toEqual([]);
+    });
+  });
 });
 
 describe('getters', () => {
