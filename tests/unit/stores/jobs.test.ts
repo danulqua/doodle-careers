@@ -268,7 +268,7 @@ describe('getters', () => {
 
         jobsStore.selectedDegrees = [];
         const result = jobsStore.SHOULD_INCLUDE_JOB_BY_DEGREE(
-          createDegree({
+          createJob({
             degree: 'Bachelor',
           })
         );
@@ -289,7 +289,7 @@ describe('getters', () => {
 
         jobsStore.selectedDegrees = ['Bachelor', 'Professor'];
         const result = jobsStore.SHOULD_INCLUDE_JOB_BY_DEGREE(
-          createDegree({
+          createJob({
             degree: 'Bachelor',
           })
         );
@@ -309,11 +309,23 @@ describe('getters', () => {
 
       jobsStore.selectedDegrees = ['Bachelor', 'Professor'];
       const result = jobsStore.SHOULD_INCLUDE_JOB_BY_DEGREE(
-        createDegree({
+        createJob({
           degree: 'Master',
         })
       );
       expect(result).toBe(false);
+    });
+  });
+
+  describe('SHOULD_INCLUDE_JOB_BY_SKILL', () => {
+    it("identifies if job matches user's skill", () => {
+      const store = useJobsStore();
+      store.skillsSearchTerm = 'Vue';
+      const job = createJob({ title: 'Vue Developer' });
+
+      const result = store.SHOULD_INCLUDE_JOB_BY_SKILL(job);
+
+      expect(result).toBe(true);
     });
   });
 });

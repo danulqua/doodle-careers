@@ -61,10 +61,14 @@ export const useJobsStore = defineStore('jobs', () => {
     return selectedJobTypes.value.includes(job.jobType);
   });
 
-  const SHOULD_INCLUDE_JOB_BY_DEGREE = computed(() => (degree: Degree) => {
+  const SHOULD_INCLUDE_JOB_BY_DEGREE = computed(() => (job: Job) => {
     const noSelectedDegrees = !selectedDegrees.value.length;
     if (noSelectedDegrees) return true;
-    return selectedDegrees.value.includes(degree.degree);
+    return selectedDegrees.value.includes(job.degree);
+  });
+
+  const SHOULD_INCLUDE_JOB_BY_SKILL = computed(() => (job: Job) => {
+    return job.title.includes(skillsSearchTerm.value);
   });
 
   const FILTERED_JOBS = computed(() =>
@@ -72,6 +76,7 @@ export const useJobsStore = defineStore('jobs', () => {
       .filter(SHOULD_INCLUDE_JOB_BY_ORGANIZATION.value)
       .filter(SHOULD_INCLUDE_JOB_BY_JOB_TYPE.value)
       .filter(SHOULD_INCLUDE_JOB_BY_DEGREE.value)
+      .filter(SHOULD_INCLUDE_JOB_BY_SKILL.value)
   );
 
   return {
@@ -91,6 +96,7 @@ export const useJobsStore = defineStore('jobs', () => {
     SHOULD_INCLUDE_JOB_BY_ORGANIZATION,
     SHOULD_INCLUDE_JOB_BY_JOB_TYPE,
     SHOULD_INCLUDE_JOB_BY_DEGREE,
+    SHOULD_INCLUDE_JOB_BY_SKILL,
     FILTERED_JOBS,
   };
 });
