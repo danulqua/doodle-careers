@@ -97,12 +97,14 @@ describe('actions', () => {
       store.selectedOrganizations = ['Doodle'];
       store.selectedJobTypes = ['Random job type'];
       store.selectedDegrees = ['Bachelor'];
+      store.skillsSearchTerm = 'Vue';
 
       store.CLEAR_JOB_FILTERS_SELECTION();
 
       expect(store.selectedOrganizations).toEqual([]);
       expect(store.selectedJobTypes).toEqual([]);
       expect(store.selectedDegrees).toEqual([]);
+      expect(store.skillsSearchTerm).toBe('');
     });
   });
 });

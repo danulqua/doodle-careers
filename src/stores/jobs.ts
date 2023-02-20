@@ -35,6 +35,7 @@ export const useJobsStore = defineStore('jobs', () => {
     selectedOrganizations.value = [];
     selectedJobTypes.value = [];
     selectedDegrees.value = [];
+    skillsSearchTerm.value = '';
   };
 
   const UNIQUE_ORGANIZATIONS = computed(() => {
