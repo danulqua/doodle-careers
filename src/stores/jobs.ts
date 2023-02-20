@@ -68,7 +68,9 @@ export const useJobsStore = defineStore('jobs', () => {
   });
 
   const SHOULD_INCLUDE_JOB_BY_SKILL = computed(() => (job: Job) => {
-    return job.title.includes(skillsSearchTerm.value);
+    return job.title
+      .toLowerCase()
+      .includes(skillsSearchTerm.value.toLowerCase());
   });
 
   const FILTERED_JOBS = computed(() =>
