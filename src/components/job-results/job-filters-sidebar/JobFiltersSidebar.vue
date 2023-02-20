@@ -4,7 +4,11 @@
       <div class="flex justify-between">
         <h3 class="my-4 text-base font-semibold">What do you want to do?</h3>
         <div class="flex items-center text-sm">
-          <ActionButton text="Clear filters" type="secondary" />
+          <ActionButton
+            text="Clear filters"
+            type="secondary"
+            @click="jobsStore.CLEAR_JOB_FILTERS_SELECTION"
+          />
         </div>
       </div>
     </section>
