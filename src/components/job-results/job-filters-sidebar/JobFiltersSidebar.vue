@@ -21,10 +21,25 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+
 import JobFiltersSidebarPrompt from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarPrompt.vue';
 import CollapsibleAccordion from '@/components/common/CollapsibleAccordion.vue';
 import JobFiltersSidebarDegrees from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarDegrees.vue';
 import JobFiltersSidebarJobTypes from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarJobTypes.vue';
 import JobFiltersSidebarOrganizations from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarOrganizations.vue';
 import JobFiltersSidebarSkills from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarSkills.vue';
+
+import { useJobsStore } from '@/stores/jobs';
+
+const route = useRoute();
+const jobsStore = useJobsStore();
+
+const parseSkillsSearchTerm = () => {
+  const role = (route.query.role as string) || '';
+  jobsStore.UPDATE_SKILLS_SEARCH_TERM(role);
+};
+
+onMounted(parseSkillsSearchTerm);
 </script>
