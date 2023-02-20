@@ -13,23 +13,26 @@
       </div>
     </section>
 
-    <JobFiltersSidebarCheckboxGroup
-      title="Degrees"
-      :unique-values="UNIQUE_DEGREES"
-      :action="jobsStore.UPDATE_SELECTED_DEGREES"
-    />
+    <CollapsibleAccordion title="Degrees">
+      <JobFiltersSidebarCheckboxGroup
+        :unique-values="UNIQUE_DEGREES"
+        :action="jobsStore.UPDATE_SELECTED_DEGREES"
+      />
+    </CollapsibleAccordion>
 
-    <JobFiltersSidebarCheckboxGroup
-      title="Job types"
-      :unique-values="UNIQUE_JOB_TYPES"
-      :action="jobsStore.UPDATE_SELECTED_JOB_TYPES"
-    />
+    <CollapsibleAccordion title="Job types">
+      <JobFiltersSidebarCheckboxGroup
+        :unique-values="UNIQUE_JOB_TYPES"
+        :action="jobsStore.UPDATE_SELECTED_JOB_TYPES"
+      />
+    </CollapsibleAccordion>
 
-    <JobFiltersSidebarCheckboxGroup
-      title="Organizations"
-      :unique-values="UNIQUE_ORGANIZATIONS"
-      :action="jobsStore.UPDATE_SELECTED_ORGANIZATIONS"
-    />
+    <CollapsibleAccordion title="Organizations">
+      <JobFiltersSidebarCheckboxGroup
+        :unique-values="UNIQUE_ORGANIZATIONS"
+        :action="jobsStore.UPDATE_SELECTED_ORGANIZATIONS"
+      />
+    </CollapsibleAccordion>
   </div>
 </template>
 
@@ -37,6 +40,7 @@
 import { computed } from 'vue';
 
 import ActionButton from '@/components/common/ActionButton.vue';
+import CollapsibleAccordion from '@/components/common/CollapsibleAccordion.vue';
 import JobFiltersSidebarCheckboxGroup from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarCheckboxGroup.vue';
 
 import { useJobsStore } from '@/stores/jobs';

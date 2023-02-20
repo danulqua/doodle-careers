@@ -1,43 +1,36 @@
 <template>
-  <CollapsibleAccordion :title="title">
-    <div class="mt-5">
-      <fieldset>
-        <ul class="flex flex-wrap">
-          <li
-            v-for="value in uniqueValues"
-            :key="value"
-            class="flex min-h-[32px] w-1/2 items-baseline space-x-2"
-          >
-            <input
-              :id="value"
-              v-model="selectedValues"
-              type="checkbox"
-              :value="value"
-              class="cursor-pointer"
-              @change="selectValue"
-            />
-            <label :for="value" class="h-full cursor-pointer pr-4">
-              {{ value }}
-            </label>
-          </li>
-        </ul>
-      </fieldset>
-    </div>
-  </CollapsibleAccordion>
+  <div class="mt-5">
+    <fieldset>
+      <ul class="flex flex-wrap">
+        <li
+          v-for="value in uniqueValues"
+          :key="value"
+          class="flex min-h-[32px] w-1/2 items-baseline space-x-2"
+        >
+          <input
+            :id="value"
+            v-model="selectedValues"
+            type="checkbox"
+            :value="value"
+            class="cursor-pointer"
+            @change="selectValue"
+          />
+          <label :for="value" class="h-full cursor-pointer pr-4">
+            {{ value }}
+          </label>
+        </li>
+      </ul>
+    </fieldset>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import CollapsibleAccordion from '@/components/common/CollapsibleAccordion.vue';
 import { useJobsStore } from '@/stores/jobs';
 
 const props = defineProps({
-  title: {
-    type: String,
-    required: true,
-  },
   uniqueValues: {
     type: Set<string>,
     required: true,
