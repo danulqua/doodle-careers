@@ -1,6 +1,13 @@
-# jobs-finder
+# Doodle Careers
 
-This template should help get you started developing with Vue 3 in Vite.
+This project is a clone (not 100%) of [Google Careers](https://careers.google.com/) website which is written using the modern stack of technologies:
+
+- TypeScript
+- Vue 3 (Composition API)
+- Pinia
+- Tailwind CSS
+- Vitest
+- Testing Library
 
 ## Recommended IDE Setup
 
