@@ -6,6 +6,7 @@ import {
   faSearch,
   faAngleDown,
   faAngleUp,
+  faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
 
 import '@/index.css';
@@ -15,6 +16,7 @@ import App from '@/App.vue';
 library.add(faSearch);
 library.add(faAngleDown);
 library.add(faAngleUp);
+library.add(faLocationDot);
 
 const pinia = createPinia();
 

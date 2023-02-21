@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-2">
+  <div class="mt-2 mb-4">
     <input
       v-model.lazy.trim="skillsSearchTerm"
       type="text"

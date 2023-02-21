@@ -92,6 +92,7 @@ export const useJobsStore = defineStore('jobs', () => {
       .filter(SHOULD_INCLUDE_JOB_BY_JOB_TYPE.value)
       .filter(SHOULD_INCLUDE_JOB_BY_DEGREE.value)
       .filter(SHOULD_INCLUDE_JOB_BY_SKILL.value)
+      .filter(SHOULD_INCLUDE_JOB_BY_LOCATION.value)
   );
 
   return {

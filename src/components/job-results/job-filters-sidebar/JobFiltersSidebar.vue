@@ -6,6 +6,10 @@
 
     <JobFiltersSidebarSkills />
 
+    <CollapsibleAccordion title="Locations">
+      <JobFiltersSidebarLocations />
+    </CollapsibleAccordion>
+
     <CollapsibleAccordion title="Degrees">
       <JobFiltersSidebarDegrees />
     </CollapsibleAccordion>
@@ -30,16 +34,19 @@ import JobFiltersSidebarDegrees from '@/components/job-results/job-filters-sideb
 import JobFiltersSidebarJobTypes from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarJobTypes.vue';
 import JobFiltersSidebarOrganizations from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarOrganizations.vue';
 import JobFiltersSidebarSkills from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarSkills.vue';
+import JobFiltersSidebarLocations from '@/components/job-results/job-filters-sidebar/JobFiltersSidebarLocations.vue';
 
 import { useJobsStore } from '@/stores/jobs';
 
 const route = useRoute();
 const jobsStore = useJobsStore();
 
-const parseSkillsSearchTerm = () => {
+const parseQueryParams = () => {
   const role = (route.query.role as string) || '';
+  const location = (route.query.location as string) || '';
   jobsStore.UPDATE_SKILLS_SEARCH_TERM(role);
+  jobsStore.UPDATE_LOCATIONS_SEARCH_TERM(location);
 };
 
-onMounted(parseSkillsSearchTerm);
+onMounted(parseQueryParams);
 </script>
