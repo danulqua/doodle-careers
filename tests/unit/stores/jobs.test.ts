@@ -39,6 +39,11 @@ describe('state', () => {
     const store = useJobsStore();
     expect(store.skillsSearchTerm).toBe('');
   });
+
+  it('stores search term for locations', () => {
+    const store = useJobsStore();
+    expect(store.locationsSearchTerm).toBe('');
+  });
 });
 
 describe('actions', () => {
@@ -90,6 +95,15 @@ describe('actions', () => {
     });
   });
 
+  describe('UPDATE_LOCATIONS_SEARCH_TERM', () => {
+    it('receives search term for locations user has entered', () => {
+      const store = useJobsStore();
+      store.locationsSearchTerm = '';
+      store.UPDATE_LOCATIONS_SEARCH_TERM('Kyiv');
+      expect(store.locationsSearchTerm).toBe('Kyiv');
+    });
+  });
+
   describe('CLEAR_JOB_FILTERS_SELECTION', () => {
     it('removes all job filters that user has chosen', () => {
       const store = useJobsStore();
@@ -98,6 +112,7 @@ describe('actions', () => {
       store.selectedJobTypes = ['Random job type'];
       store.selectedDegrees = ['Bachelor'];
       store.skillsSearchTerm = 'Vue';
+      store.locationsSearchTerm = 'Kyiv';
 
       store.CLEAR_JOB_FILTERS_SELECTION();
 
@@ -105,6 +120,7 @@ describe('actions', () => {
       expect(store.selectedJobTypes).toEqual([]);
       expect(store.selectedDegrees).toEqual([]);
       expect(store.skillsSearchTerm).toBe('');
+      expect(store.locationsSearchTerm).toBe('');
     });
   });
 });
@@ -347,6 +363,40 @@ describe('getters', () => {
         const job = createJob({ title: 'Vue Developer' });
 
         const result = store.SHOULD_INCLUDE_JOB_BY_SKILL(job);
+
+        expect(result).toBe(true);
+      });
+    });
+  });
+
+  describe('SHOULD_INCLUDE_JOB_BY_LOCATION', () => {
+    it("identifies if job matches user's location", () => {
+      const store = useJobsStore();
+      store.locationsSearchTerm = 'Kyiv';
+      const job = createJob({ locations: ['Lviv', 'Kyiv'] });
+
+      const result = store.SHOULD_INCLUDE_JOB_BY_LOCATION(job);
+
+      expect(result).toBe(true);
+    });
+
+    it('handles inconsistent character casing', () => {
+      const store = useJobsStore();
+      store.locationsSearchTerm = 'kYiV';
+      const job = createJob({ locations: ['Lviv', 'Kyiv'] });
+
+      const result = store.SHOULD_INCLUDE_JOB_BY_LOCATION(job);
+
+      expect(result).toBe(true);
+    });
+
+    describe('when the user has not entered any location', () => {
+      it('includes job', () => {
+        const store = useJobsStore();
+        store.locationsSearchTerm = '';
+        const job = createJob({ locations: ['Lviv', 'Kyiv'] });
+
+        const result = store.SHOULD_INCLUDE_JOB_BY_LOCATION(job);
 
         expect(result).toBe(true);
       });

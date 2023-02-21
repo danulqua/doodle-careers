@@ -2,7 +2,7 @@ import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 
 import getJobs from '@/api/getJobs';
-import type { Degree, Job } from '@/api/types';
+import type { Job } from '@/api/types';
 
 export const useJobsStore = defineStore('jobs', () => {
   const jobs = ref<Job[]>([]);
@@ -10,6 +10,7 @@ export const useJobsStore = defineStore('jobs', () => {
   const selectedJobTypes = ref<string[]>([]);
   const selectedDegrees = ref<string[]>([]);
   const skillsSearchTerm = ref('');
+  const locationsSearchTerm = ref('');
 
   const FETCH_JOBS = async () => {
     jobs.value = await getJobs();
@@ -31,11 +32,16 @@ export const useJobsStore = defineStore('jobs', () => {
     skillsSearchTerm.value = term;
   };
 
+  const UPDATE_LOCATIONS_SEARCH_TERM = (term: string) => {
+    locationsSearchTerm.value = term;
+  };
+
   const CLEAR_JOB_FILTERS_SELECTION = () => {
     selectedOrganizations.value = [];
     selectedJobTypes.value = [];
     selectedDegrees.value = [];
     skillsSearchTerm.value = '';
+    locationsSearchTerm.value = '';
   };
 
   const UNIQUE_ORGANIZATIONS = computed(() => {
@@ -74,6 +80,12 @@ export const useJobsStore = defineStore('jobs', () => {
       .includes(skillsSearchTerm.value.toLowerCase());
   });
 
+  const SHOULD_INCLUDE_JOB_BY_LOCATION = computed(() => (job: Job) => {
+    return job.locations.some((location) =>
+      location.toLowerCase().includes(locationsSearchTerm.value.toLowerCase())
+    );
+  });
+
   const FILTERED_JOBS = computed(() =>
     jobs.value
       .filter(SHOULD_INCLUDE_JOB_BY_ORGANIZATION.value)
@@ -88,11 +100,13 @@ export const useJobsStore = defineStore('jobs', () => {
     selectedJobTypes,
     selectedDegrees,
     skillsSearchTerm,
+    locationsSearchTerm,
     FETCH_JOBS,
     UPDATE_SELECTED_ORGANIZATIONS,
     UPDATE_SELECTED_JOB_TYPES,
     UPDATE_SELECTED_DEGREES,
     UPDATE_SKILLS_SEARCH_TERM,
+    UPDATE_LOCATIONS_SEARCH_TERM,
     CLEAR_JOB_FILTERS_SELECTION,
     UNIQUE_ORGANIZATIONS,
     UNIQUE_JOB_TYPES,
@@ -100,6 +114,7 @@ export const useJobsStore = defineStore('jobs', () => {
     SHOULD_INCLUDE_JOB_BY_JOB_TYPE,
     SHOULD_INCLUDE_JOB_BY_DEGREE,
     SHOULD_INCLUDE_JOB_BY_SKILL,
+    SHOULD_INCLUDE_JOB_BY_LOCATION,
     FILTERED_JOBS,
   };
 });
